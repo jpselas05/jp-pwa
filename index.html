@@ -1,37 +1,47 @@
-<!doctype html>
-<html lang="pt-br">
-<head>
-  <meta charset="utf-8">
-  <title>JPApp</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0a84ff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <style>
-    body{margin:0;font-family:ui-rounded,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0e1117;color:#e9eef5}
-    .wrap{max-width:720px;margin:0 auto;padding:28px 16px}
-    .card{background:#141825;border:1px solid #1e2435;border-radius:18px;padding:16px}
-    button{width:100%;padding:12px 14px;border-radius:14px;border:1px solid #2a3550;background:#0a84ff;color:#fff;font-weight:600}
-    .hint{color:#a8b3c7;font-size:12px;margin-top:8px}
-  </style>
-  <script>
-    // Ajuste base quando for user.github.io/NOMEREPO
-    const BASE = location.pathname.endsWith('/') ? location.pathname : location.pathname + '/';
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => navigator.serviceWorker.register(BASE + 'sw.js', {scope: BASE}));
-    }
-  </script>
-</head>
-<body>
-  <div class="wrap">
-    <h2>JPApp</h2>
-    <div class="card">
-      <p>Este é o “shell” PWA. Toque para abrir o app (GAS) em modo aplicativo.</p>
-      <button onclick="location.href='https://script.google.com/macros/s/AKfycbxBY0787rZ9GzhImNedqQUgN4e35yaUYhpFYnmhnWgFmqhDxlbJ4c3mJsDUHMLcuLPn/exec'">Abrir o App</button>
-      <p class="hint">Para instalar: Compartilhar → Adicionar à Tela de Início.</p>
-    </div>
-  </div>
-</body>
-</html>
+<script>
+const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50"; // gerada no passo 1
+
+// util para converter a chave VAPID
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = atob(base64);
+  const out = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; ++i) out[i] = raw.charCodeAt(i);
+  return out;
+}
+
+async function enablePush() {
+  if (!("serviceWorker" in navigator)) { alert("SW não suportado"); return; }
+  if (!("PushManager" in window)) { alert("Push não suportado"); return; }
+
+  // 1) registra o SW
+  const reg = await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+
+  // 2) pede permissão (no iOS só funciona se o app estiver instalado na Tela Inicial)
+  const perm = await Notification.requestPermission();
+  if (perm !== "granted") { alert("Permissão negada"); return; }
+
+  // 3) cria a subscription
+  const sub = await reg.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
+  });
+
+  // 4) envia a subscription para teu servidor Node
+  await fetch("https://TEU-SERVIDOR/subscriptions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(sub)
+  });
+
+  alert("Inscrição de push registrada com sucesso!");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("ativarPush");
+  btn?.addEventListener("click", enablePush);
+});
+</script>
+
+<button id="ativarPush">Ativar notificações</button>
