@@ -1,47 +1,69 @@
-<script>
-const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50"; // gerada no passo 1
+<!DOCTYPE html>
+<html lang="pt-br">
 
-// util para converter a chave VAPID
-function urlBase64ToUint8Array(base64String) {
-  const padding = "=".repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
-  const raw = atob(base64);
-  const out = new Uint8Array(raw.length);
-  for (let i = 0; i < raw.length; ++i) out[i] = raw.charCodeAt(i);
-  return out;
-}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PWA Push Teste</title>
+</head>
 
-async function enablePush() {
-  if (!("serviceWorker" in navigator)) { alert("SW não suportado"); return; }
-  if (!("PushManager" in window)) { alert("Push não suportado"); return; }
+<body>
+    <h1>🚀 PWA Push Notification Test</h1>
+    <p>Clique abaixo para ativar as notificações:</p>
+    <button id="ativar">Ativar Notificações</button>
 
-  // 1) registra o SW
-  const reg = await navigator.serviceWorker.register("./sw.js", { scope: "./" });
+    <script>
+        // 🔗 Endereço público do teu servidor via ngrok
+        const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev";
+        // 🔑 Chave pública VAPID (a mesma do backend.js)
+        const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
 
-  // 2) pede permissão (no iOS só funciona se o app estiver instalado na Tela Inicial)
-  const perm = await Notification.requestPermission();
-  if (perm !== "granted") { alert("Permissão negada"); return; }
+        function urlBase64ToUint8Array(base64String) {
+            const padding = "=".repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/-/g, "+")
+                .replace(/_/g, "/");
+            const raw = atob(base64);
+            const output = new Uint8Array(raw.length);
+            for (let i = 0; i < raw.length; ++i) output[i] = raw.charCodeAt(i);
+            return output;
+        }
 
-  // 3) cria a subscription
-  const sub = await reg.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
-  });
+        async function enablePush() {
+            // 1️⃣ Registra o Service Worker
+            const reg = await navigator.serviceWorker.register("sw.js");
+            console.log("✅ Service Worker registrado:", reg);
 
-  // 4) envia a subscription para teu servidor Node
-  await fetch("https://TEU-SERVIDOR/subscriptions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(sub)
-  });
+            // 2️⃣ Pede permissão ao usuário
+            const perm = await Notification.requestPermission();
+            if (perm !== "granted") {
+                alert("Permissão negada para notificações!");
+                return;
+            }
 
-  alert("Inscrição de push registrada com sucesso!");
-}
+            // 3️⃣ Cria a subscription com tua chave pública
+            const sub = await reg.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
+            });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("ativarPush");
-  btn?.addEventListener("click", enablePush);
-});
-</script>
+            // 4️⃣ Envia a subscription pro servidor (ngrok)
+            const res = await fetch(`${SERVER}/subscriptions`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(sub)
+            });
 
-<button id="ativarPush">Ativar notificações</button>
+            if (res.ok) {
+                alert("🎉 Inscrição feita com sucesso! Agora tu já pode receber notificações.");
+                console.log("Subscription registrada no servidor:", sub);
+            } else {
+                alert("❌ Erro ao registrar a subscription no servidor.");
+            }
+        }
+
+        document.getElementById("ativar").addEventListener("click", enablePush);
+    </script>
+</body>
+
+</html>
