@@ -1,14 +1,28 @@
 {
   "name": "Vision App",
-  "short_name": "Vision App",
+  "short_name": "Vision",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#000000",
+  "theme_color": "#d4af37",
+  "description": "Receba notificações Vision em tempo real.",
   "icons": [
-    { "src": "icons/saida_icon.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/entrada_icon.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/vision_icon.jpg", "sizes": "512x512", "type": "image/jpeg" }
+    {
+      "src": "icons/vision_icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/entrada_icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/saida_icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
   ]
 }
