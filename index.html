@@ -4,25 +4,107 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PWA Push Teste</title>
+    <title>Vision - Notificações</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icons/vision_icon.jpg">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: radial-gradient(circle at center, #0a0a0a 40%, #000000 100%);
+            color: #d4af37;
+            /* dourado */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        p {
+            color: #b99d34;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        button {
+            background: linear-gradient(135deg, #d4af37, #b88a2b);
+            color: #000;
+            border: none;
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.8rem;
+            color: #9b8326;
+            opacity: 0.8;
+        }
+
+        img.logo {
+            width: 150px;
+            margin-bottom: 1.2rem;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+            border-radius: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            img.logo {
+                width: 120px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>🚀 PWA Push Notification Test</h1>
-    <p>Clique abaixo para ativar as notificações:</p>
+    <img src="icons/vision_icon.jpg" alt="Vision Logo" class="logo">
+    <h1>Vision</h1>
+    <p>Ative as notificações para acompanhar suas movimentações em tempo real.</p>
     <button id="ativar">Ativar Notificações</button>
 
+    <footer>by JP ⚡ Vision Network</footer>
+
     <script>
-        // 🔗 Endereço público do teu servidor via ngrok
         const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev";
-        // 🔑 Chave pública VAPID (a mesma do backend.js)
         const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
 
         function urlBase64ToUint8Array(base64String) {
             const padding = "=".repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/-/g, "+")
-                .replace(/_/g, "/");
+            const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
             const raw = atob(base64);
             const output = new Uint8Array(raw.length);
             for (let i = 0; i < raw.length; ++i) output[i] = raw.charCodeAt(i);
@@ -30,24 +112,20 @@
         }
 
         async function enablePush() {
-            // 1️⃣ Registra o Service Worker
             const reg = await navigator.serviceWorker.register("sw.js");
             console.log("✅ Service Worker registrado:", reg);
 
-            // 2️⃣ Pede permissão ao usuário
             const perm = await Notification.requestPermission();
             if (perm !== "granted") {
                 alert("Permissão negada para notificações!");
                 return;
             }
 
-            // 3️⃣ Cria a subscription com tua chave pública
             const sub = await reg.pushManager.subscribe({
                 userVisibleOnly: true,
                 applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
             });
 
-            // 4️⃣ Envia a subscription pro servidor (ngrok)
             const res = await fetch(`${SERVER}/subscriptions`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -55,8 +133,7 @@
             });
 
             if (res.ok) {
-                alert("🎉 Inscrição feita com sucesso! Agora tu já pode receber notificações.");
-                console.log("Subscription registrada no servidor:", sub);
+                alert("🎉 Inscrição feita com sucesso! Você já pode receber notificações.");
             } else {
                 alert("❌ Erro ao registrar a subscription no servidor.");
             }

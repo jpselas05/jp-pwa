@@ -1,21 +1,24 @@
-// Evento disparado quando o push chega
 self.addEventListener("push", (event) => {
     if (!event.data) return;
-
     const data = event.data.json();
-    console.log("📬 Notificação recebida:", data);
 
-    // Monta as opções da notificação
+    // Define ícone local conforme tipo
+    let icon = "icons/vision_icon.jpg"; // padrão
+    if (data.title?.includes("entrada") || data.body?.includes("entrada")) {
+        icon = "icons/entrada_icon.png";
+    } else if (data.title?.includes("saída") || data.body?.includes("saída") || data.title?.includes("saida")) {
+        icon = "icons/saida_icon.png";
+    }
+
     const options = {
         body: data.body,
-        icon: data.icon,
-        badge: data.badge,
-        image: data.image || undefined, // imagem grande (opcional)
+        icon: icon,
+        badge: icon,
+        image: data.image || undefined,
         data: data.data || {},
-        vibrate: [100, 50, 100],
-        // Ações (botões abaixo da notificação)
+        vibrate: [120, 60, 120],
         actions: [
-            { action: "abrir", title: "Abrir", icon: data.icon },
+            { action: "abrir", title: "Abrir", icon },
             { action: "fechar", title: "Fechar" }
         ]
     };
@@ -25,27 +28,19 @@ self.addEventListener("push", (event) => {
     );
 });
 
-// Evento disparado ao clicar na notificação
 self.addEventListener("notificationclick", (event) => {
     event.notification.close();
-
     if (event.action === "fechar") return;
 
-    // Abre o link enviado no payload (ou o index.html se não tiver)
     const destino = event.notification.data.url || "index.html";
-
     event.waitUntil(
         clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
-            // Se já houver uma aba aberta do app, foca nela
             for (const client of clientList) {
                 if (client.url.includes(destino) && "focus" in client) {
                     return client.focus();
                 }
             }
-            // Senão, abre uma nova aba
-            if (clients.openWindow) {
-                return clients.openWindow(destino);
-            }
+            if (clients.openWindow) return clients.openWindow(destino);
         })
     );
 });
