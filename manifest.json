@@ -9,10 +9,9 @@
   "description": "Receba notificações Vision em tempo real.",
   "icons": [
     {
-      "src": "icons/vision_icon.jpg",
+      "src": "icons/vision_icon.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "icons/entrada_icon.png",
