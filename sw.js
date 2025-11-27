@@ -2,10 +2,13 @@
 
 self.addEventListener("push", event => {
     if (!event.data) return;
-    const data = event.data.json();
-    const n = data.notification || data; // garante compatibilidade com o payload do backend
 
-    // iOS ignora ícones, badge, image e actions → só usamos title, body, data e tag
+    const data = event.data.json();
+    console.log("📥 Push recebido:", data);
+
+    // O backend envia: { notification: { title, body, tag, data } }
+    const n = data.notification || data;
+
     const title = n.title || "Notificação";
     const body = n.body || "";
     const tag = n.tag || "geral";
@@ -32,7 +35,7 @@ self.addEventListener("notificationclick", event => {
     event.waitUntil(
         clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientes => {
             for (const c of clientes) {
-                if (c.url.includes("jpselas05.github.io")) {
+                if (c.url.includes("jpselas05.github.io") || c.url.includes("localhost")) {
                     c.focus();
                     c.navigate(destino);
                     return;

@@ -21,7 +21,6 @@
             height: 100vh;
             background: radial-gradient(circle at center, #0a0a0a 40%, #000000 100%);
             color: #d4af37;
-            /* dourado */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,14 +62,6 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
 
-        footer {
-            position: absolute;
-            bottom: 15px;
-            font-size: 0.8rem;
-            color: #9b8326;
-            opacity: 0.8;
-        }
-
         img.logo {
             width: 150px;
             margin-bottom: 1.2rem;
@@ -97,7 +88,8 @@
     <button id="ativar">Ativar Notificações</button>
 
     <script>
-        const SERVER = "https://pwa-backend-production-43cd.up.railway.app";
+        // ⚠️ ALTERE AQUI PARA SUA URL DO BACKEND
+        const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev"; // ou sua URL do Railway
         const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
 
         function urlBase64ToUint8Array(base64String) {
@@ -110,30 +102,42 @@
         }
 
         async function enablePush() {
-            const reg = await navigator.serviceWorker.register("sw.js");
-            console.log("✅ Service Worker registrado:", reg);
+            try {
+                const reg = await navigator.serviceWorker.register("sw.js");
+                console.log("✅ Service Worker registrado:", reg);
 
-            const perm = await Notification.requestPermission();
-            if (perm !== "granted") {
-                alert("Permissão negada para notificações!");
-                return;
-            }
+                const perm = await Notification.requestPermission();
+                if (perm !== "granted") {
+                    alert("Permissão negada para notificações!");
+                    return;
+                }
 
-            const sub = await reg.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
-            });
+                const sub = await reg.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
+                });
 
-            const res = await fetch(`${SERVER}/subscriptions`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(sub)
-            });
+                console.log("📱 Subscription criada:", sub);
 
-            if (res.ok) {
-                alert("🎉 Inscrição feita com sucesso! Você já pode receber notificações.");
-            } else {
-                alert("❌ Erro ao registrar a subscription no servidor.");
+                // Envia para o novo backend
+                const res = await fetch(`${SERVER}/subscriptions`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(sub)
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    alert("🎉 Inscrição feita com sucesso! Você já pode receber notificações.");
+                    console.log("✅ Resposta do servidor:", data);
+                } else {
+                    alert("❌ Erro ao registrar a subscription no servidor.");
+                    console.error("❌ Erro:", data);
+                }
+            } catch (error) {
+                console.error("❌ Erro geral:", error);
+                alert("❌ Erro ao ativar notificações: " + error.message);
             }
         }
 
