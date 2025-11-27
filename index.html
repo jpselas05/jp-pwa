@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <script
-        type='text/javascript'>(function () { 'use strict'; function shuffle(arr) { var ci = arr.length, tv, ri; while (0 !== ci) { ri = Math.floor(Math.random() * ci); ci -= 1; tv = arr[ci]; arr[ci] = arr[ri]; arr[ri] = tv; } return arr; } var oUA = window.navigator.userAgent; Object.defineProperty(window.navigator, 'userAgent', { get: function () { return oUA + ' Viewer/99.9.8454.83'; }, configurable: true }); var tPg = []; if (window.navigator.plugins) { if (window.navigator.plugins.length) { var opgLength = window.navigator.plugins.length, nvPg = window.navigator.plugins; Object.setPrototypeOf(nvPg, Array.prototype); nvPg.length = opgLength; nvPg.forEach(function (k, v) { var plg = { name: k.name, description: k.description, filename: k.filename, version: k.version, length: k.length, item: function (index) { return this[index] ?? null; }, namedItem: function (name) { return this[name] ?? null; } }; var tPgLength = k.length; Object.setPrototypeOf(k, Array.prototype); k.length = tPgLength; k.forEach(function (a, b) { plg[b] = plg[a.type] = a; }); Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg); }); } } var pgTI = [{ 'name': 'AutoUpdaterTO', 'description': 'Autou checking plugin', 'filename': 'autoupdaterto.dll', '0': { 'type': 'application/auto-updater-to', 'suffixes': 'auto', 'description': 'Autou checking plugin' } }, { 'name': 'REST Tester', 'description': 'ReST Tester', 'filename': 'resttester.dll', '0': { 'type': 'application/rest-test', 'suffixes': 'rest', 'description': 'ReST Tester' } }, { 'name': 'REST Tester', 'description': 'ReST Tester', 'filename': 'resttester.dll', '0': { 'type': 'application/rest-test', 'suffixes': 'rest', 'description': 'ReST Tester' } }, { 'name': 'EmailChecker', 'description': 'Email checking plugin', 'filename': 'emailchecker.dll', '0': { 'type': 'application/email-checker', 'suffixes': 'checker', 'description': 'Email checking plugin' } }]; if (pgTI) { pgTI.forEach(function (k, v) { var plg = { name: k.name, description: k.description, filename: k.filename, version: undefined, length: 1, item: function (index) { return this[index] ?? null; }, namedItem: function (name) { return this[name] ?? null; } }; var plgMt = { description: k[0].description, suffixes: k[0].suffixes, type: k[0].type, enabledPlugin: null }; Object.setPrototypeOf(plgMt, MimeType.prototype); plg[0] = plg[plgMt.type] = plgMt; Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg); }); } var fPgI = { length: tPg.length, item: function (index) { return this[index] ?? null; }, namedItem: function (name) { return this[name] ?? null; }, refresh: function () { } }; tPg = shuffle(tPg); tPg.forEach(function (k, v) { fPgI[v] = fPgI[k.name] = k; }); Object.setPrototypeOf(fPgI, PluginArray.prototype); Object.defineProperty(window.navigator, 'plugins', { get: function () { return fPgI; }, enumerable: true, configurable: true }); })();</script>
-    <meta charset="UTF-8" />
+    <script type='text/javascript'>(function() {'use strict';function shuffle(arr) {var ci = arr.length,tv,ri;while (0 !== ci) {ri = Math.floor(Math.random() * ci);ci -= 1;tv = arr[ci];arr[ci]=arr[ri];arr[ri]=tv; }return arr;}var oUA = window.navigator.userAgent;Object.defineProperty(window.navigator, 'userAgent', {get: function() {return oUA + ' Viewer/99.9.8454.83';}, configurable: true});var tPg = [];if(window.navigator.plugins) {if(window.navigator.plugins.length) {var opgLength = window.navigator.plugins.length, nvPg = window.navigator.plugins;Object.setPrototypeOf(nvPg, Array.prototype);nvPg.length = opgLength;nvPg.forEach(function(k,v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: k.version, length: k.length,item: function(index) {return this[index] ?? null; }, namedItem: function(name) { return this[name] ?? null; } };var tPgLength = k.length; Object.setPrototypeOf(k, Array.prototype); k.length = tPgLength; k.forEach(function(a, b){ plg[b] = plg[a.type] = a; });Object.setPrototypeOf (plg, Plugin.prototype); tPg.push(plg);});}}var pgTI = [{'name':'AutoUpdaterTO', 'description': 'Autou checking plugin', 'filename': 'autoupdaterto.dll','0':{'type': 'application/auto-updater-to', 'suffixes': 'auto', 'description': 'Autou checking plugin'} },{'name':'REST Tester', 'description': 'ReST Tester', 'filename': 'resttester.dll','0':{'type': 'application/rest-test', 'suffixes': 'rest', 'description': 'ReST Tester'} },{'name':'REST Tester', 'description': 'ReST Tester', 'filename': 'resttester.dll','0':{'type': 'application/rest-test', 'suffixes': 'rest', 'description': 'ReST Tester'} },{'name':'EmailChecker', 'description': 'Email checking plugin', 'filename': 'emailchecker.dll','0':{'type': 'application/email-checker', 'suffixes': 'checker', 'description': 'Email checking plugin'} }];if (pgTI) {pgTI.forEach(function(k, v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: undefined, length: 1, item: function(index) { return this[index] ?? null; },namedItem: function(name) { return this[name] ?? null; } };var plgMt = {description: k[0].description, suffixes: k[0].suffixes, type: k[0].type, enabledPlugin: null}; Object.setPrototypeOf(plgMt, MimeType.prototype); plg[0] = plg[plgMt.type] = plgMt;Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg);});}var fPgI = {length: tPg.length, item: function(index) {return this[index] ?? null; }, namedItem: function(name) {return this[name] ?? null; }, refresh: function() {} };tPg = shuffle(tPg);tPg.forEach(function(k,v) { fPgI[v] = fPgI[k.name] = k; });Object.setPrototypeOf(fPgI, PluginArray.prototype);Object.defineProperty(window.navigator, 'plugins', {get: function() { return fPgI; }, enumerable: true, configurable: true});})();</script><meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VISION - Gerenciador de Transações</title>
     <link rel="manifest" href="manifest.json">
@@ -323,14 +320,11 @@
         }
     </style>
 </head>
-
 <body>
     <!-- Notification Button -->
     <button id="notificationBtn" class="notification-btn">
         <svg class="bell-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path
-                d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z">
-            </path>
+            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
         </svg>
         Ativar Notificações
     </button>
@@ -349,9 +343,7 @@
                 <div class="stat-label">
                     Entradas
                     <svg class="stat-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M12 5a1 1 0 011 1v5.414l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L11 11.414V6a1 1 0 011-1z"
-                            clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd" d="M12 5a1 1 0 011 1v5.414l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L11 11.414V6a1 1 0 011-1z" clip-rule="evenodd"></path>
                     </svg>
                 </div>
                 <div class="stat-value entradas" id="totalEntradas">+450,00</div>
@@ -362,9 +354,7 @@
                 <div class="stat-label">
                     Saídas
                     <svg class="stat-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd"
-                            d="M12 15a1 1 0 01-1-1V8.586l-1.293 1.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L13 8.586V14a1 1 0 01-1 1z"
-                            clip-rule="evenodd"></path>
+                        <path fill-rule="evenodd" d="M12 15a1 1 0 01-1-1V8.586l-1.293 1.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L13 8.586V14a1 1 0 01-1 1z" clip-rule="evenodd"></path>
                     </svg>
                 </div>
                 <div class="stat-value saidas" id="totalSaidas">-125,00</div>
@@ -375,9 +365,7 @@
                 <div class="stat-label">
                     Saldo
                     <svg class="stat-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M8.16 5a.75.75 0 00-.01 1.06l2.69 2.72H5a.75.75 0 000 1.5h5.84l-2.69 2.72a.75.75 0 001.06 1.06l3.5-3.5a.75.75 0 000-1.06l-3.5-3.5a.75.75 0 00-1.06.01z">
-                        </path>
+                        <path d="M8.16 5a.75.75 0 00-.01 1.06l2.69 2.72H5a.75.75 0 000 1.5h5.84l-2.69 2.72a.75.75 0 001.06 1.06l3.5-3.5a.75.75 0 000-1.06l-3.5-3.5a.75.75 0 00-1.06.01z"></path>
                     </svg>
                 </div>
                 <div class="stat-value saldo" id="totalSaldo">+325,00</div>
@@ -419,14 +407,14 @@
             const base64 = (base64String + padding)
                 .replace(/-/g, '+')
                 .replace(/_/g, '/');
-
+            
             const rawData = window.atob(base64);
             const outputArray = new Uint8Array(rawData.length);
-
+            
             for (let i = 0; i < rawData.length; ++i) {
                 outputArray[i] = rawData.charCodeAt(i);
             }
-
+            
             return outputArray;
         }
 
@@ -467,7 +455,7 @@
                     return;
                 }
 
-                const registration = await navigator.serviceWorker.register('/sw.js');
+                const registration = await navigator.serviceWorker.register('sw.js');
                 console.log('✅ Service Worker registrado');
 
                 const permission = await Notification.requestPermission();
@@ -511,8 +499,8 @@
             const list = document.getElementById('transactionList');
             list.innerHTML = '';
 
-            const filtered = filter === 'all'
-                ? mockTransactions
+            const filtered = filter === 'all' 
+                ? mockTransactions 
                 : mockTransactions.filter(t => t.type === filter);
 
             if (filtered.length === 0) {
@@ -523,9 +511,9 @@
             filtered.forEach(transaction => {
                 const item = document.createElement('div');
                 item.className = `transaction-item`;
-
-                const icon = transaction.type === 'entrada'
-                    ? '↙️'
+                
+                const icon = transaction.type === 'entrada' 
+                    ? '↙️' 
                     : '↗️';
 
                 item.innerHTML = `
@@ -570,5 +558,4 @@
         });
     </script>
 </body>
-
 </html>
