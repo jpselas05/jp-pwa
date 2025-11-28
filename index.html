@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vision - Dashboard</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/vision_icon.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        
+
         :root {
             --gold-main: #d4af37;
             --gold-dark: #b88a2b;
@@ -17,7 +19,8 @@
             --bg-card: rgba(20, 20, 20, 0.6);
             --text-main: #e6edfa;
             --danger: #ff5c5c;
-            --success: #d4af37; /* Usei o dourado para representar entrada/sucesso */
+            --success: #d4af37;
+            /* Usei o dourado para representar entrada/sucesso */
             --border-radius: 20px;
         }
 
@@ -41,7 +44,7 @@
         /* Ícones Google */
         .material-symbols-outlined {
             vertical-align: middle;
-            font-size: 20px; 
+            font-size: 20px;
         }
 
         /* Botão Flutuante de Notificação */
@@ -60,7 +63,8 @@
             box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
             z-index: 1000;
-            display: none; /* Só aparece se não tiver inscrito */
+            display: none;
+            /* Só aparece se não tiver inscrito */
             align-items: center;
             gap: 6px;
         }
@@ -178,7 +182,7 @@
             position: relative;
             padding-bottom: 10px;
         }
-        
+
         .transactions-title::after {
             content: '';
             position: absolute;
@@ -231,11 +235,12 @@
             overflow-y: auto;
             padding-right: 5px;
         }
-        
+
         /* Scrollbar customizada */
         .transaction-list::-webkit-scrollbar {
             width: 4px;
         }
+
         .transaction-list::-webkit-scrollbar-thumb {
             background: var(--gold-dark);
             border-radius: 4px;
@@ -251,7 +256,7 @@
             align-items: center;
             transition: background 0.2s;
         }
-        
+
         .transaction-card:hover {
             background: rgba(255, 255, 255, 0.05);
         }
@@ -259,6 +264,7 @@
         .transaction-card[data-tipo="entrada"] {
             border-left-color: var(--success);
         }
+
         .transaction-card[data-tipo="saida"] {
             border-left-color: var(--danger);
         }
@@ -284,11 +290,17 @@
             font-size: 16px;
             font-weight: 600;
         }
-        
-        .tx-value.positive { color: var(--success); }
-        .tx-value.negative { color: var(--danger); }
 
-        .loading, .empty {
+        .tx-value.positive {
+            color: var(--success);
+        }
+
+        .tx-value.negative {
+            color: var(--danger);
+        }
+
+        .loading,
+        .empty {
             text-align: center;
             padding: 30px;
             color: var(--gold-muted);
@@ -303,6 +315,7 @@
                 background: transparent;
                 box-shadow: none;
             }
+
             body {
                 align-items: flex-start;
                 padding-top: 10px;
@@ -310,6 +323,7 @@
         }
     </style>
 </head>
+
 <body>
     <button id="notifyBtn">
         <span class="material-symbols-outlined">notifications</span>
@@ -389,7 +403,7 @@
             const dataTransacao = new Date(dataISO);
             const agora = new Date();
             const segundos = Math.floor((agora - dataTransacao) / 1000);
-            
+
             if (segundos < 60) return `agora`;
             const minutos = Math.floor(segundos / 60);
             if (minutos < 60) return `${minutos} min atrás`;
@@ -416,11 +430,11 @@
             const btn = document.getElementById('notifyBtn');
             btn.disabled = true;
             btn.innerHTML = 'Ativando...';
-            
+
             try {
                 const reg = await navigator.serviceWorker.register("sw.js");
                 const perm = await Notification.requestPermission();
-                
+
                 if (perm !== "granted") {
                     alert("Precisamos da sua permissão para notificar!");
                     btn.disabled = false;
@@ -454,18 +468,17 @@
 
         // --- LÓGICA DO DASHBOARD ---
         async function loadStats() {
-            return
             try {
                 const res = await fetch(`${SERVER}/transactions/stats`, {
                     headers: { "ngrok-skip-browser-warning": "true" }
                 });
                 const data = await res.json();
                 const stats = data.data || { totalEntradas: 0, totalSaidas: 0, saldo: 0 };
-                
+
                 document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
                 document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
                 document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
-                
+
                 const saldoEl = document.getElementById('saldo');
                 saldoEl.classList.remove('positive', 'negative');
                 if (stats.saldo > 0) saldoEl.classList.add('positive');
@@ -478,7 +491,7 @@
         async function loadTransactions() {
             const container = document.getElementById('transactionsList');
             // Só mostra carregando se estiver vazio, para não piscar na atualização automática
-            if(container.children.length === 0) container.innerHTML = '<div class="loading">Buscando dados...</div>';
+            if (container.children.length === 0) container.innerHTML = '<div class="loading">Buscando dados...</div>';
 
             try {
                 const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
@@ -502,7 +515,7 @@
                 container.innerHTML = transactions.map(t => {
                     const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
                     const relativo = tempoRelativo(t.data);
-                    
+
                     return `
                         <div class="transaction-card" data-tipo="${t.tipo}">
                             <div class="tx-info">
@@ -521,7 +534,7 @@
         }
 
         // --- EVENTOS E INICIALIZAÇÃO ---
-        
+
         // Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -542,7 +555,7 @@
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
             const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             const dateStr = now.toLocaleDateString('pt-BR', options);
-            
+
             document.getElementById('dataAtual').textContent = `${dateStr} • ${timeStr}`;
         }
 
@@ -550,14 +563,13 @@
         (async () => {
             const isSubscribed = await checkIfSubscribed();
             if (!isSubscribed) document.getElementById('notifyBtn').classList.add('show');
-            
+
             updateDateTime();
             setInterval(updateDateTime, 1000); // Atualiza relógio a cada segundo
-            
-            loadStats();
+
             loadTransactions();
-            setInterval(() => { loadStats(); loadTransactions(); }, 15000); // Polling a cada 15s
         })();
     </script>
 </body>
+
 </html>
