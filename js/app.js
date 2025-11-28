@@ -12,14 +12,14 @@ export function urlBase64ToUint8Array(base64String) {
   const base64 = (base64String + padding)
     .replace(/-/g, '+')
     .replace(/_/g, '/');
-  
+
   const rawData = window.atob(base64);
   const outputArray = new Uint8Array(rawData.length);
-  
+
   for (let i = 0; i < rawData.length; ++i) {
     outputArray[i] = rawData.charCodeAt(i);
   }
-  
+
   return outputArray;
 }
 
@@ -35,7 +35,7 @@ export async function checkIfSubscribed() {
 
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
-    
+
     return subscription !== null;
   } catch (error) {
     console.error('❌ Erro ao verificar subscription:', error);
@@ -55,7 +55,7 @@ export async function enablePush() {
     }
 
     // Registra Service Worker
-    const registration = await navigator.serviceWorker.register('/sw.js');
+    const registration = await navigator.serviceWorker.register('./sw.js');
     console.log('✅ Service Worker registrado');
 
     // Pede permissão
@@ -76,9 +76,9 @@ export async function enablePush() {
     const result = await registerSubscription(subscription);
 
     if (result.success) {
-      return { 
-        success: true, 
-        message: '🎉 Notificações ativadas com sucesso!' 
+      return {
+        success: true,
+        message: '🎉 Notificações ativadas com sucesso!'
       };
     } else {
       throw new Error(result.error);
@@ -86,9 +86,9 @@ export async function enablePush() {
 
   } catch (error) {
     console.error('❌ Erro ao ativar push:', error);
-    return { 
-      success: false, 
-      message: error.message 
+    return {
+      success: false,
+      message: error.message
     };
   }
 }
@@ -137,9 +137,9 @@ export function formatRelativeDate(data) {
   } else if (date.toDateString() === yesterday.toDateString()) {
     return 'Ontem';
   } else {
-    return date.toLocaleDateString('pt-BR', { 
-      day: '2-digit', 
-      month: 'short' 
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'short'
     });
   }
 }
