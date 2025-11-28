@@ -26,11 +26,7 @@ self.addEventListener("push", event => {
 self.addEventListener("notificationclick", event => {
     event.notification.close();
 
-    const tipo = event.notification.data?.tipo;
-    let destino = "/";
 
-    if (tipo === "entrada") destino = "/?filter=entrada";
-    if (tipo === "saida") destino = "/?filter=saida";
 
     event.waitUntil(
         clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientes => {
@@ -40,7 +36,6 @@ self.addEventListener("notificationclick", event => {
                     return;
                 }
             }
-            clients.openWindow(destino);
         })
     );
 });
