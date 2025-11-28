@@ -507,13 +507,14 @@
 
         // Init
         (async () => {
-            const isSubscribed = await checkIfSubscribed();
-            if (!isSubscribed) document.getElementById('notifyBtn').classList.add('show');
+            console.log('🚀 Inicializando Vision Dashboard...');
 
+            await updateNotifyButtonUI();
             updateDateTime();
-            setInterval(updateDateTime, 1000); // Atualiza relógio a cada segundo
+            setInterval(updateDateTime, 1000);
+            await loadTransactions();
 
-            loadTransactions();
+            console.log('✅ Dashboard carregado!');
         })();
     </script>
 </body>
