@@ -560,15 +560,14 @@
         }
 
         // Init
-        (async () => {
-            const isSubscribed = await checkIfSubscribed();
-            if (!isSubscribed) document.getElementById('notifyBtn').classList.add('show');
+        alert("passou por aqui")
+        const isSubscribed = await checkIfSubscribed();
+        if (!isSubscribed) document.getElementById('notifyBtn').classList.add('show');
 
-            updateDateTime();
-            setInterval(updateDateTime, 1000); // Atualiza relógio a cada segundo
+        updateDateTime();
+        setInterval(updateDateTime, 1000); // Atualiza relógio a cada segundo
 
-            loadTransactions();
-        })();
+        loadTransactions();
     </script>
 </body>
 
