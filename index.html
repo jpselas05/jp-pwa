@@ -34,7 +34,7 @@
 
         .material-symbols-outlined { vertical-align: middle; font-size: 20px; }
 
-        /* --- ESTILO DO BOTÃO DE NOTIFICAÇÃO --- */
+        /* --- BOTÃO DE NOTIFICAÇÃO --- */
         #notifyBtn {
             position: fixed;
             top: 20px;
@@ -48,12 +48,11 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             transition: all 0.3s ease;
             z-index: 1000;
-            display: flex; /* Agora sempre visível (a lógica controla o texto) */
+            display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        /* Estado: NÃO INSCRITO (Botão Dourado) */
         #notifyBtn.state-subscribe {
             background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
             color: #000;
@@ -61,7 +60,6 @@
         }
         #notifyBtn.state-subscribe:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
 
-        /* Estado: INSCRITO (Botão Outline Vermelho) */
         #notifyBtn.state-unsubscribe {
             background: transparent;
             border: 1px solid var(--danger);
@@ -73,7 +71,7 @@
             transform: scale(1.05);
         }
 
-        /* --- CONTAINER E RESTO DO DESIGN --- */
+        /* --- CONTAINER PRINCIPAL --- */
         .container {
             max-width: 420px;
             width: 100%;
@@ -83,6 +81,9 @@
             border-radius: var(--border-radius);
             padding: 30px 20px;
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            min-height: 500px; /* Altura mínima para ficar bonito sem os stats */
+            display: flex;
+            flex-direction: column;
         }
 
         .header { text-align: center; margin-bottom: 25px; }
@@ -90,15 +91,18 @@
         .header h2 { font-size: 24px; font-weight: 600; color: var(--gold-main); text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); letter-spacing: 1px; }
         .header .now { font-size: 12px; color: var(--gold-muted); margin-top: 5px; opacity: 0.8; font-weight: 300; }
 
-        .bal-values { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px; }
-        .bal-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.15); padding: 16px; border-radius: 16px; text-align: center; transition: transform 0.2s; }
-        .bal-card:hover { transform: translateY(-3px); border-color: rgba(212, 175, 55, 0.4); }
-        .bal-card .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 4px; }
-        .bal-card .value { font-size: 18px; font-weight: 600; color: #fff; }
-        .bal-card .value.positive { color: var(--success); text-shadow: 0 0 5px rgba(212, 175, 55, 0.3); }
-        .bal-card .value.negative { color: var(--danger); text-shadow: 0 0 5px rgba(255, 92, 92, 0.3); }
-
-        .transactions-title { text-align: center; font-size: 14px; color: var(--gold-main); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+        .transactions-title { 
+            text-align: center; 
+            font-size: 14px; 
+            color: var(--gold-main); 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 20px; 
+            position: relative; 
+            padding-bottom: 10px;
+            margin-top: 10px; 
+        }
         .transactions-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 2px; background: var(--gold-dark); }
 
         .filter-buttons { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
@@ -106,7 +110,7 @@
         .filter-btn:hover { color: var(--gold-main); border-color: var(--gold-main); }
         .filter-btn.active { background: linear-gradient(135deg, var(--gold-main), var(--gold-dark)); color: #000; border: none; box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3); }
 
-        .transaction-list { display: flex; flex-direction: column; gap: 12px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
+        .transaction-list { display: flex; flex-direction: column; gap: 12px; flex-grow: 1; overflow-y: auto; padding-right: 5px; }
         .transaction-list::-webkit-scrollbar { width: 4px; }
         .transaction-list::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 4px; }
         .transaction-card { background: rgba(255, 255, 255, 0.02); border-left: 3px solid transparent; padding: 14px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; }
@@ -123,7 +127,7 @@
         .loading, .empty { text-align: center; padding: 30px; color: var(--gold-muted); font-size: 13px; }
 
         @media (max-width: 480px) {
-            .container { width: 100%; border: none; background: transparent; box-shadow: none; }
+            .container { width: 100%; border: none; background: transparent; box-shadow: none; min-height: auto; }
             body { align-items: flex-start; padding-top: 10px; }
         }
     </style>
@@ -141,26 +145,7 @@
             <div class="now"><span id="dataAtual">--</span></div>
         </div>
 
-        <div class="bal-values">
-            <div class="bal-card">
-                <div class="label"><span class="material-symbols-outlined">arrow_downward</span>Entradas</div>
-                <div class="value positive" id="totalEntradas">--</div>
-            </div>
-            <div class="bal-card">
-                <div class="label"><span class="material-symbols-outlined">arrow_upward</span>Saídas</div>
-                <div class="value negative" id="totalSaidas">--</div>
-            </div>
-            <div class="bal-card">
-                <div class="label"><span class="material-symbols-outlined">account_balance</span>Saldo</div>
-                <div class="value" id="saldo">--</div>
-            </div>
-            <div class="bal-card">
-                <div class="label"><span class="material-symbols-outlined">receipt_long</span>Total</div>
-                <div class="value" id="totalTransacoes">--</div>
-            </div>
-        </div>
-
-        <div class="transactions-title">Movimentações</div>
+        <div class="transactions-title">Histórico de Movimentações</div>
 
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">Todas</button>
@@ -169,7 +154,7 @@
         </div>
 
         <div class="transaction-list" id="transactionsList">
-            <div class="loading">Sincronizando...</div>
+            <div class="loading">Carregando histórico...</div>
         </div>
     </div>
 
@@ -203,34 +188,27 @@
             return `${dias} dias atrás`;
         }
 
-        // --- LÓGICA DE NOTIFICAÇÃO (UPDATED) ---
-        
-        // Verifica se está inscrito e retorna a inscrição ou null
+        // --- LÓGICA DE NOTIFICAÇÃO ---
         async function getSubscription() {
             if (!('serviceWorker' in navigator)) return null;
             const registration = await navigator.serviceWorker.ready;
             return await registration.pushManager.getSubscription();
         }
 
-        // Atualiza a aparência do botão baseado no estado
         async function updateNotifyButtonUI() {
             const btn = document.getElementById('notifyBtn');
-            const txt = document.getElementById('notifyText');
             const sub = await getSubscription();
 
             if (sub) {
-                // Modo: Inscrito -> Mostrar botão de Desativar
                 btn.className = 'state-unsubscribe';
                 btn.innerHTML = '<span class="material-symbols-outlined">notifications_off</span> Desativar Notificações';
             } else {
-                // Modo: Não Inscrito -> Mostrar botão de Ativar
                 btn.className = 'state-subscribe';
                 btn.innerHTML = '<span class="material-symbols-outlined">notifications</span> Ativar Notificações';
             }
             btn.disabled = false;
         }
 
-        // Função Principal que decide se ativa ou desativa
         async function togglePush() {
             const btn = document.getElementById('notifyBtn');
             btn.disabled = true;
@@ -239,10 +217,8 @@
             const sub = await getSubscription();
 
             if (sub) {
-                // Se já tem, vamos REMOVER
                 await unsubscribeUser(sub);
             } else {
-                // Se não tem, vamos ADICIONAR
                 await subscribeUser();
             }
         }
@@ -263,7 +239,6 @@
                     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
                 });
 
-                // Salva no backend
                 await fetch(`${SERVER}/subscriptions`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
@@ -282,18 +257,14 @@
 
         async function unsubscribeUser(subscription) {
             try {
-                // 1. Tenta avisar o backend para deletar (Opcional, mas boa prática)
-                // Nota: Seu backend precisaria de uma rota DELETE, mas se não tiver,
-                // vamos apenas ignorar o erro e remover do navegador.
                 try {
                     await fetch(`${SERVER}/subscriptions`, {
-                        method: "DELETE", // Se seu backend não suportar DELETE, vai dar erro 404/405, mas seguimos.
+                        method: "DELETE",
                         headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
                         body: JSON.stringify({ endpoint: subscription.endpoint }) 
                     });
                 } catch (e) { console.log("Backend sync failed, removing local anyway"); }
 
-                // 2. Remove do navegador (O mais importante)
                 await subscription.unsubscribe();
                 
                 alert("Vision: Notificações Desativadas.");
@@ -307,32 +278,19 @@
         }
 
         // --- LÓGICA DO DASHBOARD ---
-        async function loadStats() {
-            try {
-                const res = await fetch(`${SERVER}/transactions/stats`, { headers: { "ngrok-skip-browser-warning": "true" } });
-                const data = await res.json();
-                const stats = data.data || { totalEntradas: 0, totalSaidas: 0, saldo: 0 };
-                
-                document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
-                document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
-                document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
-                
-                const saldoEl = document.getElementById('saldo');
-                saldoEl.classList.remove('positive', 'negative');
-                if (stats.saldo > 0) saldoEl.classList.add('positive');
-                else if (stats.saldo < 0) saldoEl.classList.add('negative');
-            } catch (error) { console.error('Erro stats:', error); }
-        }
+        
+        // Removemos a função loadStats() pois a rota não existe mais
 
         async function loadTransactions() {
             const container = document.getElementById('transactionsList');
-            if(container.children.length === 0) container.innerHTML = '<div class="loading">Buscando dados...</div>';
+            // Como agora só roda uma vez, podemos deixar o loading inicial fixo no HTML ou setar aqui
+            container.innerHTML = '<div class="loading">Buscando dados...</div>';
+            
             try {
                 const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
                 const res = await fetch(`${SERVER}/transactions${params}`, { headers: { "ngrok-skip-browser-warning": "true" } });
                 const data = await res.json();
                 const transactions = data.data || [];
-                document.getElementById('totalTransacoes').textContent = transactions.length;
 
                 if (transactions.length === 0) {
                     container.innerHTML = `<div class="empty"><span class="material-symbols-outlined" style="font-size: 30px; margin-bottom: 10px; display:block;">inbox</span>Nenhuma movimentação encontrada</div>`;
@@ -359,7 +317,6 @@
             });
         });
 
-        // Botão de toggle
         document.getElementById('notifyBtn').addEventListener('click', togglePush);
 
         function updateDateTime() {
@@ -369,14 +326,17 @@
             document.getElementById('dataAtual').textContent = `${now.toLocaleDateString('pt-BR', options)} • ${timeStr}`;
         }
 
-        (async () => {
-            await updateNotifyButtonUI(); // Verifica estado inicial do botão
+        // DOMContentLoaded: Ocorre quando o HTML foi completamente carregado e analisado
+        document.addEventListener('DOMContentLoaded', async () => {
+            await updateNotifyButtonUI();
             updateDateTime();
+            
+            // Relógio continua rodando a cada segundo
             setInterval(updateDateTime, 1000);
-            loadStats();
+            
+            // Carrega o histórico APENAS UMA VEZ
             loadTransactions();
-            setInterval(() => { loadStats(); loadTransactions(); }, 15000);
-        })();
+        });
     </script>
 </body>
 </html>
