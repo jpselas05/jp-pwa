@@ -34,7 +34,6 @@
 
         .material-symbols-outlined { vertical-align: middle; font-size: 20px; }
 
-        /* --- BOTÃO DE NOTIFICAÇÃO --- */
         #notifyBtn {
             position: fixed;
             top: 20px;
@@ -66,12 +65,8 @@
             color: var(--danger);
             box-shadow: none;
         }
-        #notifyBtn.state-unsubscribe:hover {
-            background: rgba(255, 92, 92, 0.1);
-            transform: scale(1.05);
-        }
+        #notifyBtn.state-unsubscribe:hover { background: rgba(255, 92, 92, 0.1); transform: scale(1.05); }
 
-        /* --- CONTAINER PRINCIPAL --- */
         .container {
             max-width: 420px;
             width: 100%;
@@ -81,7 +76,7 @@
             border-radius: var(--border-radius);
             padding: 30px 20px;
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-            min-height: 500px; /* Altura mínima para ficar bonito sem os stats */
+            min-height: 500px;
             display: flex;
             flex-direction: column;
         }
@@ -129,6 +124,7 @@
         @media (max-width: 480px) {
             .container { width: 100%; border: none; background: transparent; box-shadow: none; min-height: auto; }
             body { align-items: flex-start; padding-top: 10px; }
+            #notifyBtn { top: 10px; right: 10px; padding: 8px 16px; font-size: 12px; }
         }
     </style>
 </head>
@@ -142,7 +138,7 @@
         <div class="header">
             <img src="icons/vision_icon.png" alt="Vision Logo" class="logo">
             <h2>VISION</h2>
-            <div class="now"><span id="dataAtual">--</span></div>
+            <div class="now"><span id="dataAtual">Carregando...</span></div>
         </div>
 
         <div class="transactions-title">Histórico de Movimentações</div>
@@ -159,12 +155,10 @@
     </div>
 
     <script>
-        // --- CONFIGURAÇÃO ---
         const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev";
         const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
         let currentFilter = 'all';
 
-        // --- FUNÇÕES UTILITÁRIAS ---
         function urlBase64ToUint8Array(base64String) {
             const padding = "=".repeat((4 - base64String.length % 4) % 4);
             const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
@@ -183,16 +177,20 @@
             const minutos = Math.floor(segundos / 60);
             if (minutos < 60) return `${minutos} min atrás`;
             const horas = Math.floor(minutos / 60);
-            if (horas < 24) return `${horas} h atrás`;
+            if (horas < 24) return `${horas}h atrás`;
             const dias = Math.floor(horas / 24);
             return `${dias} dias atrás`;
         }
 
-        // --- LÓGICA DE NOTIFICAÇÃO ---
         async function getSubscription() {
-            if (!('serviceWorker' in navigator)) return null;
-            const registration = await navigator.serviceWorker.ready;
-            return await registration.pushManager.getSubscription();
+            try {
+                if (!('serviceWorker' in navigator)) return null;
+                const registration = await navigator.serviceWorker.ready;
+                return await registration.pushManager.getSubscription();
+            } catch (error) {
+                console.error('Erro ao buscar subscription:', error);
+                return null;
+            }
         }
 
         async function updateNotifyButtonUI() {
@@ -230,7 +228,7 @@
                 
                 if (perm !== "granted") {
                     alert("Precisamos da permissão para notificar.");
-                    updateNotifyButtonUI();
+                    await updateNotifyButtonUI();
                     return;
                 }
 
@@ -239,75 +237,108 @@
                     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
                 });
 
-                await fetch(`${SERVER}/subscriptions`, {
+                const res = await fetch(`${SERVER}/subscriptions`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
+                    headers: { 
+                        "Content-Type": "application/json", 
+                        "ngrok-skip-browser-warning": "true" 
+                    },
                     body: JSON.stringify(sub)
                 });
 
-                alert("Vision: Notificações Ativadas!");
-                updateNotifyButtonUI();
+                if (res.ok) {
+                    alert("✅ Vision: Notificações Ativadas!");
+                } else {
+                    throw new Error('Erro ao registrar no servidor');
+                }
+                
+                await updateNotifyButtonUI();
 
             } catch (error) {
-                console.error(error);
-                alert("Erro ao ativar.");
-                updateNotifyButtonUI();
+                console.error('Erro ao ativar:', error);
+                alert("❌ Erro ao ativar notificações.");
+                await updateNotifyButtonUI();
             }
         }
 
         async function unsubscribeUser(subscription) {
             try {
-                try {
-                    await fetch(`${SERVER}/subscriptions`, {
-                        method: "DELETE",
-                        headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
-                        body: JSON.stringify({ endpoint: subscription.endpoint }) 
-                    });
-                } catch (e) { console.log("Backend sync failed, removing local anyway"); }
+                // Remove do backend primeiro
+                await fetch(`${SERVER}/subscriptions`, {
+                    method: "DELETE",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "ngrok-skip-browser-warning": "true" 
+                    },
+                    body: JSON.stringify({ endpoint: subscription.endpoint })
+                });
 
+                // Remove localmente
                 await subscription.unsubscribe();
                 
-                alert("Vision: Notificações Desativadas.");
-                updateNotifyButtonUI();
+                alert("✅ Vision: Notificações Desativadas.");
+                await updateNotifyButtonUI();
 
             } catch (error) {
-                console.error(error);
-                alert("Erro ao desativar.");
-                updateNotifyButtonUI();
+                console.error('Erro ao desativar:', error);
+                alert("❌ Erro ao desativar notificações.");
+                await updateNotifyButtonUI();
             }
         }
 
-        // --- LÓGICA DO DASHBOARD ---
-        
-        // Removemos a função loadStats() pois a rota não existe mais
-
         async function loadTransactions() {
             const container = document.getElementById('transactionsList');
-            // Como agora só roda uma vez, podemos deixar o loading inicial fixo no HTML ou setar aqui
             container.innerHTML = '<div class="loading">Buscando dados...</div>';
             
             try {
                 const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
-                const res = await fetch(`${SERVER}/transactions${params}`, { headers: { "ngrok-skip-browser-warning": "true" } });
+                const res = await fetch(`${SERVER}/transactions${params}`, { 
+                    headers: { "ngrok-skip-browser-warning": "true" } 
+                });
+                
+                if (!res.ok) throw new Error('Erro ao buscar transações');
+                
                 const data = await res.json();
                 const transactions = data.data || [];
 
                 if (transactions.length === 0) {
-                    container.innerHTML = `<div class="empty"><span class="material-symbols-outlined" style="font-size: 30px; margin-bottom: 10px; display:block;">inbox</span>Nenhuma movimentação encontrada</div>`;
+                    container.innerHTML = `
+                        <div class="empty">
+                            <span class="material-symbols-outlined" style="font-size: 30px; margin-bottom: 10px; display:block;">inbox</span>
+                            Nenhuma movimentação encontrada
+                        </div>`;
                     return;
                 }
+                
                 container.innerHTML = transactions.map(t => {
                     const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
                     const relativo = tempoRelativo(t.data);
-                    return `<div class="transaction-card" data-tipo="${t.tipo}">
-                            <div class="tx-info"><span class="tx-type">${icon}</span><span class="tx-date">${relativo}</span></div>
-                            <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}</div>
+                    return `
+                        <div class="transaction-card" data-tipo="${t.tipo}">
+                            <div class="tx-info">
+                                <span class="tx-type">${icon}</span>
+                                <span class="tx-date">${relativo}</span>
+                            </div>
+                            <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
+                                ${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}
+                            </div>
                         </div>`;
                 }).join('');
-            } catch (error) { container.innerHTML = '<div class="empty">Erro de conexão</div>'; }
+                
+            } catch (error) {
+                console.error('Erro ao carregar transações:', error);
+                container.innerHTML = '<div class="empty">❌ Erro de conexão</div>';
+            }
         }
 
-        // --- EVENTOS E INICIALIZAÇÃO ---
+        function updateDateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('dataAtual').textContent = `${now.toLocaleDateString('pt-BR', options)} • ${timeStr}`;
+        }
+
+        // Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -317,26 +348,20 @@
             });
         });
 
+        // Botão de notificação
         document.getElementById('notifyBtn').addEventListener('click', togglePush);
 
-        function updateDateTime() {
-            const now = new Date();
-            const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('dataAtual').textContent = `${now.toLocaleDateString('pt-BR', options)} • ${timeStr}`;
-        }
-
-        // DOMContentLoaded: Ocorre quando o HTML foi completamente carregado e analisado
-        document.addEventListener('DOMContentLoaded', async () => {
+        // INICIALIZAÇÃO IMEDIATA (sem DOMContentLoaded)
+        (async function init() {
+            console.log('🚀 Inicializando Vision Dashboard...');
+            
             await updateNotifyButtonUI();
             updateDateTime();
-            
-            // Relógio continua rodando a cada segundo
             setInterval(updateDateTime, 1000);
+            await loadTransactions();
             
-            // Carrega o histórico APENAS UMA VEZ
-            loadTransactions();
-        });
+            console.log('✅ Dashboard carregado!');
+        })();
     </script>
 </body>
 </html>
