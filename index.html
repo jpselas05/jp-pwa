@@ -505,8 +505,13 @@
         // Botão de notificação
         document.getElementById('notifyBtn').addEventListener('click', togglePush);
 
-        // INICIALIZAÇÃO IMEDIATA (sem DOMContentLoaded)
-        document.addEventListener('DOMContentLoaded', async function () {
+        // INICIALIZAÇÃO (compatível com iOS)
+        let initialized = false;
+
+        async function initApp() {
+            if (initialized) return;
+            initialized = true;
+
             console.log('🚀 Inicializando Vision Dashboard...');
 
             await updateNotifyButtonUI();
@@ -515,7 +520,18 @@
             await loadTransactions();
 
             console.log('✅ Dashboard carregado!');
-        });
+        }
+
+        // Tenta inicializar de múltiplas formas (iOS Safari pode ter problemas com DOMContentLoaded)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            // DOM já está pronto
+            initApp();
+        }
+
+        // Backup para iOS: garante inicialização após load completo
+        window.addEventListener('load', initApp);
     </script>
 </body>
 
