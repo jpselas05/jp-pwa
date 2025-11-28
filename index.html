@@ -1,561 +1,177 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <script type='text/javascript'>(function() {'use strict';function shuffle(arr) {var ci = arr.length,tv,ri;while (0 !== ci) {ri = Math.floor(Math.random() * ci);ci -= 1;tv = arr[ci];arr[ci]=arr[ri];arr[ri]=tv; }return arr;}var oUA = window.navigator.userAgent;Object.defineProperty(window.navigator, 'userAgent', {get: function() {return oUA + ' Viewer/99.9.8454.83';}, configurable: true});var tPg = [];if(window.navigator.plugins) {if(window.navigator.plugins.length) {var opgLength = window.navigator.plugins.length, nvPg = window.navigator.plugins;Object.setPrototypeOf(nvPg, Array.prototype);nvPg.length = opgLength;nvPg.forEach(function(k,v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: k.version, length: k.length,item: function(index) {return this[index] ?? null; }, namedItem: function(name) { return this[name] ?? null; } };var tPgLength = k.length; Object.setPrototypeOf(k, Array.prototype); k.length = tPgLength; k.forEach(function(a, b){ plg[b] = plg[a.type] = a; });Object.setPrototypeOf (plg, Plugin.prototype); tPg.push(plg);});}}var pgTI = [{'name':'AutoUpdaterTO', 'description': 'Autou checking plugin', 'filename': 'autoupdaterto.dll','0':{'type': 'application/auto-updater-to', 'suffixes': 'auto', 'description': 'Autou checking plugin'} },{'name':'REST Tester', 'description': 'ReST Tester', 'filename': 'resttester.dll','0':{'type': 'application/rest-test', 'suffixes': 'rest', 'description': 'ReST Tester'} },{'name':'REST Tester', 'description': 'ReST Tester', 'filename': 'resttester.dll','0':{'type': 'application/rest-test', 'suffixes': 'rest', 'description': 'ReST Tester'} },{'name':'EmailChecker', 'description': 'Email checking plugin', 'filename': 'emailchecker.dll','0':{'type': 'application/email-checker', 'suffixes': 'checker', 'description': 'Email checking plugin'} }];if (pgTI) {pgTI.forEach(function(k, v) {var plg = {name: k.name, description: k.description, filename: k.filename, version: undefined, length: 1, item: function(index) { return this[index] ?? null; },namedItem: function(name) { return this[name] ?? null; } };var plgMt = {description: k[0].description, suffixes: k[0].suffixes, type: k[0].type, enabledPlugin: null}; Object.setPrototypeOf(plgMt, MimeType.prototype); plg[0] = plg[plgMt.type] = plgMt;Object.setPrototypeOf(plg, Plugin.prototype); tPg.push(plg);});}var fPgI = {length: tPg.length, item: function(index) {return this[index] ?? null; }, namedItem: function(name) {return this[name] ?? null; }, refresh: function() {} };tPg = shuffle(tPg);tPg.forEach(function(k,v) { fPgI[v] = fPgI[k.name] = k; });Object.setPrototypeOf(fPgI, PluginArray.prototype);Object.defineProperty(window.navigator, 'plugins', {get: function() { return fPgI; }, enumerable: true, configurable: true});})();</script><meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VISION - Gerenciador de Transações</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision - Dashboard</title>
     <link rel="manifest" href="manifest.json">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            color: #e2e8f0;
-            min-height: 100vh;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Notification Button */
-        .notification-btn {
-            position: fixed;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: #000;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            z-index: 50;
-        }
-
-        .notification-btn:hover:not(:disabled) {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
-        }
-
-        .notification-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .notification-btn.hidden {
-            display: none;
-        }
-
-        .bell-icon {
-            width: 18px;
-            height: 18px;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.05em;
-        }
-
-        .header p {
-            color: #94a3b8;
-            font-size: 0.95rem;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            background: rgba(30, 41, 59, 0.7);
-            border-color: rgba(148, 163, 184, 0.4);
-        }
-
-        .stat-card.saldo {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
-            border-color: rgba(251, 191, 36, 0.3);
-        }
-
-        .stat-card.saldo:hover {
-            border-color: rgba(251, 191, 36, 0.5);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .stat-icon {
-            width: 18px;
-            height: 18px;
-            opacity: 0.8;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        .stat-value.entradas {
-            color: #10b981;
-        }
-
-        .stat-value.saidas {
-            color: #ef4444;
-        }
-
-        .stat-value.saldo {
-            color: #fbbf24;
-        }
-
-        /* Transaction History */
-        .history-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: 1rem;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .history-card h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: #e2e8f0;
-        }
-
-        /* Tabs */
-        .tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            padding: 0.75rem 1.25rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .tab-btn:hover {
-            color: #cbd5e1;
-        }
-
-        .tab-btn.active {
-            color: #fbbf24;
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-        }
-
-        /* Transaction List */
-        .transaction-list {
-            space-y: 0.75rem;
-        }
-
-        .transaction-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.15);
-            border-radius: 0.75rem;
-            margin-bottom: 0.75rem;
-            transition: all 0.3s ease;
-        }
-
-        .transaction-item:hover {
-            background: rgba(15, 23, 42, 0.8);
-            border-color: rgba(148, 163, 184, 0.3);
-        }
-
-        .transaction-item.hidden {
-            display: none;
-        }
-
-        .transaction-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .transaction-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .transaction-icon.entrada {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
-        }
-
-        .transaction-icon.saida {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-        }
-
-        .transaction-info h3 {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #e2e8f0;
-            margin-bottom: 0.25rem;
-        }
-
-        .transaction-info p {
-            font-size: 0.8rem;
-            color: #94a3b8;
-        }
-
-        .transaction-amount {
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .transaction-amount.entrada {
-            color: #10b981;
-        }
-
-        .transaction-amount.saida {
-            color: #ef4444;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-            color: #94a3b8;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .notification-btn {
-                top: 1rem;
-                right: 1rem;
-                padding: 0.6rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .tabs {
-                flex-wrap: wrap;
-            }
-
-            .tab-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+    <link rel="icon" href="icons/vision_icon.png">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Notification Button -->
-    <button id="notificationBtn" class="notification-btn">
-        <svg class="bell-icon" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-        </svg>
-        Ativar Notificações
-    </button>
+    <!-- Botão Ativar Notificações (canto superior) -->
+    <button id="notifyBtn">🔔 Ativar Notificações</button>
 
     <div class="container">
         <!-- Header -->
-        <div class="header">
-            <h1>VISION</h1>
-            <p>Gerenciador de Transações</p>
-        </div>
+        <header>
+            <h1>Vision</h1>
+            <p>Acompanhe suas movimentações em tempo real</p>
+        </header>
 
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <!-- Entradas -->
+        <!-- Stats Cards -->
+        <section class="stats">
+            <div class="stat-card entrada">
+                <div class="icon">📥</div>
+                <div class="label">Entradas</div>
+                <div class="value" id="totalEntradas">--</div>
+            </div>
+            <div class="stat-card saida">
+                <div class="icon">📤</div>
+                <div class="label">Saídas</div>
+                <div class="value" id="totalSaidas">--</div>
+            </div>
             <div class="stat-card">
-                <div class="stat-label">
-                    Entradas
-                    <svg class="stat-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M12 5a1 1 0 011 1v5.414l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L11 11.414V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-                    </svg>
+                <div class="icon">💰</div>
+                <div class="label">Saldo</div>
+                <div class="value" id="saldo">--</div>
+            </div>
+        </section>
+
+        <!-- Histórico -->
+        <section class="historico">
+            <div class="historico-header">
+                <h2>Histórico de Transações</h2>
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="entrada">Entradas</button>
+                    <button class="filter-btn" data-filter="saida">Saídas</button>
                 </div>
-                <div class="stat-value entradas" id="totalEntradas">+450,00</div>
             </div>
-
-            <!-- Saídas -->
-            <div class="stat-card">
-                <div class="stat-label">
-                    Saídas
-                    <svg class="stat-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M12 15a1 1 0 01-1-1V8.586l-1.293 1.293a1 1 0 01-1.414-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L13 8.586V14a1 1 0 01-1 1z" clip-rule="evenodd"></path>
-                    </svg>
-                </div>
-                <div class="stat-value saidas" id="totalSaidas">-125,00</div>
+            <div id="transactionsList" class="transactions-list">
+                <div class="loading">Carregando...</div>
             </div>
-
-            <!-- Saldo -->
-            <div class="stat-card saldo">
-                <div class="stat-label">
-                    Saldo
-                    <svg class="stat-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M8.16 5a.75.75 0 00-.01 1.06l2.69 2.72H5a.75.75 0 000 1.5h5.84l-2.69 2.72a.75.75 0 001.06 1.06l3.5-3.5a.75.75 0 000-1.06l-3.5-3.5a.75.75 0 00-1.06.01z"></path>
-                    </svg>
-                </div>
-                <div class="stat-value saldo" id="totalSaldo">+325,00</div>
-            </div>
-        </div>
-
-        <!-- Transaction History -->
-        <div class="history-card">
-            <h2>Histórico de Transações</h2>
-
-            <!-- Tabs -->
-            <div class="tabs">
-                <button class="tab-btn active" data-filter="all">Todas</button>
-                <button class="tab-btn" data-filter="entrada">Entradas</button>
-                <button class="tab-btn" data-filter="saida">Saídas</button>
-            </div>
-
-            <!-- Transaction List -->
-            <div class="transaction-list" id="transactionList"></div>
-        </div>
+        </section>
     </div>
 
-    <script>
-        // ===== CONFIGURAÇÃO =====
-        const VAPID_PUBLIC_KEY = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
+    <script type="module">
+        import { checkIfSubscribed, enablePush, formatDate, formatCurrency, formatRelativeDate } from './js/app.js';
+        import { getTransactions, getStats } from './js/api.js';
 
-        // ===== DADOS MOCKADOS =====
-        const mockTransactions = [
-            { id: '1', date: '2024-11-27T14:30:00', type: 'entrada', amount: 100 },
-            { id: '2', date: '2024-11-26T10:15:00', type: 'saida', amount: 50 },
-            { id: '3', date: '2024-11-25T16:45:00', type: 'entrada', amount: 200 },
-            { id: '4', date: '2024-11-24T09:20:00', type: 'saida', amount: 75 },
-            { id: '5', date: '2024-11-23T13:10:00', type: 'entrada', amount: 150 },
-        ];
+        let currentFilter = 'all';
 
-        // ===== FUNÇÕES UTILITÁRIAS =====
-        function urlBase64ToUint8Array(base64String) {
-            const padding = '='.repeat((4 - base64String.length % 4) % 4);
-            const base64 = (base64String + padding)
-                .replace(/-/g, '+')
-                .replace(/_/g, '/');
+        // ===== VERIFICAR SE JÁ TEM NOTIFICAÇÃO ATIVA =====
+        async function checkNotifications() {
+            const isSubscribed = await checkIfSubscribed();
+            const btn = document.getElementById('notifyBtn');
             
-            const rawData = window.atob(base64);
-            const outputArray = new Uint8Array(rawData.length);
-            
-            for (let i = 0; i < rawData.length; ++i) {
-                outputArray[i] = rawData.charCodeAt(i);
-            }
-            
-            return outputArray;
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        function formatCurrency(value) {
-            return new Intl.NumberFormat('pt-BR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }).format(value);
-        }
-
-        // ===== NOTIFICAÇÕES =====
-        async function checkIfSubscribed() {
-            try {
-                if (!('serviceWorker' in navigator)) return false;
-                const registration = await navigator.serviceWorker.ready;
-                const subscription = await registration.pushManager.getSubscription();
-                return subscription !== null;
-            } catch (error) {
-                console.error('Erro ao verificar subscription:', error);
-                return false;
+            if (!isSubscribed) {
+                btn.classList.add('show');
             }
         }
 
-        async function enablePush() {
-            try {
-                if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-                    alert('Push notifications não suportadas neste navegador');
-                    return;
-                }
+        // ===== ATIVAR NOTIFICAÇÕES =====
+        document.getElementById('notifyBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('notifyBtn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Ativando...';
 
-                const registration = await navigator.serviceWorker.register('sw.js');
-                console.log('✅ Service Worker registrado');
+            const result = await enablePush();
 
-                const permission = await Notification.requestPermission();
-                if (permission !== 'granted') {
-                    alert('Permissão negada para notificações');
-                    return;
-                }
-
-                const subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
-                });
-
-                console.log('📱 Subscription criada:', subscription);
-                alert('🎉 Notificações ativadas com sucesso!');
-                document.getElementById('notificationBtn').classList.add('hidden');
-            } catch (error) {
-                console.error('❌ Erro ao ativar notificações:', error);
-                alert('Erro ao ativar notificações: ' + error.message);
+            if (result.success) {
+                alert(result.message);
+                btn.classList.remove('show');
+            } else {
+                alert('❌ ' + result.message);
+                btn.disabled = false;
+                btn.textContent = '🔔 Ativar Notificações';
             }
+        });
+
+        // ===== CARREGAR ESTATÍSTICAS =====
+        async function loadStats() {
+            const stats = await getStats();
+            
+            document.getElementById('totalEntradas').textContent = `+${formatCurrency(stats.totalEntradas)}`;
+            document.getElementById('totalSaidas').textContent = `-${formatCurrency(stats.totalSaidas)}`;
+            document.getElementById('saldo').textContent = formatCurrency(stats.saldo);
         }
 
-        // ===== TRANSAÇÕES =====
-        function calculateStats() {
-            const totalEntradas = mockTransactions
-                .filter(t => t.type === 'entrada')
-                .reduce((sum, t) => sum + t.amount, 0);
+        // ===== CARREGAR TRANSAÇÕES =====
+        async function loadTransactions() {
+            const container = document.getElementById('transactionsList');
+            container.innerHTML = '<div class="loading">Carregando...</div>';
 
-            const totalSaidas = mockTransactions
-                .filter(t => t.type === 'saida')
-                .reduce((sum, t) => sum + t.amount, 0);
+            const filtros = currentFilter === 'all' ? {} : { tipo: currentFilter };
+            const transactions = await getTransactions(filtros);
 
-            const saldo = totalEntradas - totalSaidas;
-
-            document.getElementById('totalEntradas').textContent = '+' + formatCurrency(totalEntradas);
-            document.getElementById('totalSaidas').textContent = '-' + formatCurrency(totalSaidas);
-            document.getElementById('totalSaldo').textContent = (saldo >= 0 ? '+' : '-') + formatCurrency(Math.abs(saldo));
-        }
-
-        function renderTransactions(filter = 'all') {
-            const list = document.getElementById('transactionList');
-            list.innerHTML = '';
-
-            const filtered = filter === 'all' 
-                ? mockTransactions 
-                : mockTransactions.filter(t => t.type === filter);
-
-            if (filtered.length === 0) {
-                list.innerHTML = '<div class="empty-state">Nenhuma transação encontrada</div>';
+            if (transactions.length === 0) {
+                container.innerHTML = '<div class="empty">Nenhuma transação encontrada</div>';
                 return;
             }
 
-            filtered.forEach(transaction => {
-                const item = document.createElement('div');
-                item.className = `transaction-item`;
-                
-                const icon = transaction.type === 'entrada' 
-                    ? '↙️' 
-                    : '↗️';
-
-                item.innerHTML = `
+            container.innerHTML = transactions.map(t => `
+                <div class="transaction-item">
                     <div class="transaction-left">
-                        <div class="transaction-icon ${transaction.type}">
-                            ${icon}
+                        <div class="transaction-icon ${t.tipo}">
+                            ${t.tipo === 'entrada' ? '📥' : '📤'}
                         </div>
                         <div class="transaction-info">
-                            <h3>${formatDate(transaction.date)}</h3>
-                            <p>${transaction.type === 'entrada' ? 'Entrada' : 'Saída'}</p>
+                            <div class="tipo">${t.tipo === 'entrada' ? 'Entrada confirmada' : 'Saída registrada'}</div>
+                            <div class="data">${formatRelativeDate(t.data)} às ${new Date(t.data).toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>
                         </div>
                     </div>
-                    <div class="transaction-amount ${transaction.type}">
-                        ${transaction.type === 'entrada' ? '+' : '-'}${formatCurrency(transaction.amount)}
+                    <div class="transaction-right">
+                        <div class="valor ${t.tipo}">
+                            ${t.tipo === 'entrada' ? '+' : '-'}${formatCurrency(t.valor)}
+                        </div>
+                        <div class="token">USDT</div>
                     </div>
-                `;
-
-                list.appendChild(item);
-            });
+                </div>
+            `).join('');
         }
 
-        // ===== EVENT LISTENERS =====
-        document.getElementById('notificationBtn').addEventListener('click', enablePush);
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                renderTransactions(e.target.dataset.filter);
+        // ===== FILTROS =====
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                loadTransactions();
             });
         });
 
         // ===== INICIALIZAÇÃO =====
-        window.addEventListener('load', async () => {
-            const isSubscribed = await checkIfSubscribed();
-            if (isSubscribed) {
-                document.getElementById('notificationBtn').classList.add('hidden');
-            }
+        checkNotifications();
+        loadStats();
+        loadTransactions();
 
-            calculateStats();
-            renderTransactions('all');
+        // ===== LISTENER PARA MENSAGENS DO SERVICE WORKER =====
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            if (event.data.action === 'filter' && event.data.tipo) {
+                // Aplica filtro quando clica na notificação
+                const filterBtn = document.querySelector(`[data-filter="${event.data.tipo}"]`);
+                if (filterBtn) {
+                    filterBtn.click();
+                }
+            }
         });
+
+        // ===== VERIFICAR FILTRO NA URL (para abrir diretamente) =====
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+        if (filterParam && ['entrada', 'saida'].includes(filterParam)) {
+            const filterBtn = document.querySelector(`[data-filter="${filterParam}"]`);
+            if (filterBtn) {
+                filterBtn.click();
+            }
+        }
+
+        // ===== AUTO-REFRESH A CADA 30 SEGUNDOS =====
+        setInterval(() => {
+            loadStats();
+            loadTransactions();
+        }, 30000);
     </script>
 </body>
 </html>

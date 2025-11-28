@@ -27,20 +27,23 @@ self.addEventListener("notificationclick", event => {
     event.notification.close();
 
     const tipo = event.notification.data?.tipo;
-    let destino = "/";
 
-    if (tipo === "entrada") destino = "/historico?tipo=entrada";
-    if (tipo === "saida") destino = "/historico?tipo=saida";
+    // Monta URL com filtro (query param)
+    let destino = "/";
+    if (tipo === "entrada") destino = "/?filter=entrada";
+    if (tipo === "saida") destino = "/?filter=saida";
 
     event.waitUntil(
         clients.matchAll({ type: "window", includeUncontrolled: true }).then(clientes => {
+            // Se já tem uma janela aberta, foca nela
             for (const c of clientes) {
                 if (c.url.includes("jpselas05.github.io") || c.url.includes("localhost")) {
                     c.focus();
-                    c.navigate(destino);
+                    c.postMessage({ action: 'filter', tipo }); // Envia mensagem para filtrar
                     return;
                 }
             }
+            // Se não tem janela aberta, abre uma nova
             clients.openWindow(destino);
         })
     );
