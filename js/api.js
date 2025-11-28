@@ -10,7 +10,10 @@ export async function registerSubscription(subscription) {
   try {
     const response = await fetch(`${SERVER_URL}/subscriptions`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true'
+      },
       body: JSON.stringify(subscription)
     });
 
@@ -39,7 +42,9 @@ export async function getTransactions(filtros = {}) {
     if (filtros.tipo) params.append('tipo', filtros.tipo);
     if (filtros.limit) params.append('limit', filtros.limit);
 
-    const response = await fetch(`${SERVER_URL}/transactions?${params}`);
+    const response = await fetch(`${SERVER_URL}/transactions?${params}`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
     const data = await response.json();
 
     if (!response.ok) {
@@ -59,7 +64,9 @@ export async function getTransactions(filtros = {}) {
  */
 export async function getStats() {
   try {
-    const response = await fetch(`${SERVER_URL}/transactions/stats`);
+    const response = await fetch(`${SERVER_URL}/transactions/stats`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
     const data = await response.json();
 
     if (!response.ok) {
@@ -79,7 +86,9 @@ export async function getStats() {
  */
 export async function checkServerHealth() {
   try {
-    const response = await fetch(`${SERVER_URL}/health`);
+    const response = await fetch(`${SERVER_URL}/health`, {
+      headers: { 'ngrok-skip-browser-warning': 'true' }
+    });
     return response.ok;
   } catch (error) {
     console.error('❌ Servidor offline:', error);
