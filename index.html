@@ -506,7 +506,7 @@
         document.getElementById('notifyBtn').addEventListener('click', togglePush);
 
         // INICIALIZAÇÃO IMEDIATA (sem DOMContentLoaded)
-        (async function init() {
+        document.addEventListener('DOMContentLoaded', async function () {
             console.log('🚀 Inicializando Vision Dashboard...');
 
             await updateNotifyButtonUI();
@@ -515,7 +515,7 @@
             await loadTransactions();
 
             console.log('✅ Dashboard carregado!');
-        })();
+        });
     </script>
 </body>
 
