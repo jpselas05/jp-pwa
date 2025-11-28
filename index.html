@@ -3,380 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision - Dashboard</title>
+    <title>Vision - Dashboard Gold</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icons/vision_icon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        /* Importando a fonte do novo design */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
         
         :root {
-            --bg-main: #12141d;
-            --bg-card: #1c1f2b;
-            --primary: #9ce08a;
-            --secondary: #cbcfea;
-            --alert-pos: #9ce08a;
-            --alert-neg: #fb4b4e;
-            --title-color: #e6edfa;
-            --accent: #5d7aec;
-            --address: #aecbe8;
-            --border-radius: 14px;
-            --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            --glow-pos: 0 0 8px rgba(37, 211, 98, 0.301);
-            --glow-neg: 0 0 8px rgba(251, 75, 78, 0.4);
+            --bg-gradient: radial-gradient(circle at center, #0a0a0a 40%, #000000 100%);
+            --gold-main: #d4af37;
+            --gold-light: #eacda3;
+            --gold-dark: #b88a2b;
+            --gold-muted: #b99d34;
+            --text-dark: #000000;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: 1px solid rgba(212, 175, 55, 0.3);
+            --danger: #ff4d4d; /* Vermelho ajustado para combinar com o escuro */
+            --glow: 0 0 10px rgba(212, 175, 55, 0.4);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background: var(--bg-main);
-            color: var(--secondary);
             min-height: 100vh;
+            background: var(--bg-gradient);
+            color: var(--gold-main);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 20px;
+            /* Scroll suave */
+            overflow-x: hidden;
         }
 
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            vertical-align: middle;
-        }
-
+        /* --- Botão Flutuante (Estilo Novo) --- */
         #notifyBtn {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: linear-gradient(135deg, var(--accent), #4a5fc1);
-            color: #fff;
+            background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
+            color: var(--text-dark);
             border: none;
             padding: 10px 20px;
             border-radius: 50px;
-            font-size: 13px;
+            font-size: 0.9rem;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: var(--box-shadow);
-            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
             z-index: 1000;
-            display: none;
+            display: none; /* Só aparece via JS se não tiver inscrito */
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
         #notifyBtn:hover {
             transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
+        
+        #notifyBtn.show { display: flex; }
 
-        #notifyBtn.show {
+        .material-symbols-outlined { vertical-align: middle; }
+
+        /* --- Header e Logo --- */
+        .header-container {
+            text-align: center;
+            margin-bottom: 25px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .container {
-            max-width: 400px;
+        img.logo {
+            width: 100px; /* Um pouco menor que a landing page para caber no dashboard */
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            text-shadow: var(--glow);
+            margin-bottom: 5px;
+        }
+
+        .date-badge {
+            font-size: 0.8rem;
+            color: var(--gold-muted);
+            border: 1px solid var(--gold-muted);
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.3);
+        }
+
+        /* --- Layout Principal --- */
+        .dashboard-container {
             width: 100%;
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 20px 16px;
-            box-shadow: var(--box-shadow);
+            max-width: 480px; /* Largura ideal mobile */
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header .now {
-            font-size: 12px;
-            color: var(--accent);
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-
-        .header h2 {
-            font-size: 22px;
-            color: var(--title-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .bal-values {
+        /* --- Cards de Saldo --- */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: var(--card-border);
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transition: transform 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glow);
+        }
+
+        .stat-card.full-width {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(0,0,0,0.8));
+            border-color: var(--gold-main);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gold-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff; /* Branco para contraste melhor com fundo escuro */
+            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+        }
+
+        .stat-value.gold-text { color: var(--gold-main); text-shadow: var(--glow); }
+        .stat-value.red-text { color: var(--danger); text-shadow: 0 0 8px rgba(255, 77, 77, 0.4); }
+
+        /* --- Filtros --- */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
             margin-bottom: 20px;
-        }
-
-        .bal-card {
-            background: #252a3b;
-            padding: 16px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            box-shadow: var(--box-shadow);
-        }
-
-        .bal-card .label {
-            font-size: 11px;
-            color: var(--secondary);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            opacity: 0.8;
-        }
-
-        .bal-card .value {
-            font-size: 20px;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .bal-card .value.positive {
-            color: var(--alert-pos);
-            text-shadow: var(--glow-pos);
-        }
-
-        .bal-card .value.negative {
-            color: var(--alert-neg);
-            text-shadow: var(--glow-neg);
-        }
-
-        .transactions-title {
-            text-align: center;
-            font-size: 12px;
-            color: var(--accent);
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .subtext {
-            font-size: 11px;
-            color: #8a8d9b;
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 16px;
         }
 
         .filter-btn {
-            background: #252a3b;
-            border: none;
+            background: transparent;
+            border: 1px solid var(--gold-muted);
+            color: var(--gold-muted);
             padding: 8px 16px;
-            border-radius: 8px;
-            color: var(--secondary);
-            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 12px;
-            text-transform: uppercase;
+            font-size: 0.85rem;
+            transition: all 0.3s;
         }
 
-        .filter-btn:hover {
-            background: #2d334a;
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--gold-main);
+            color: var(--text-dark);
+            border-color: var(--gold-main);
+            box-shadow: var(--glow);
+            font-weight: 600;
         }
 
-        .filter-btn.active {
-            background: var(--accent);
+        /* --- Lista de Transações --- */
+        .transactions-header {
+            text-align: left;
+            margin-bottom: 15px;
+            padding-left: 5px;
+            border-left: 3px solid var(--gold-main);
+            margin-left: 5px;
+        }
+
+        .transactions-header h3 {
+            font-size: 1.1rem;
             color: #fff;
         }
+        
+        .transactions-header p {
+            font-size: 0.8rem;
+            color: var(--gold-muted);
+        }
 
-        .transaction-list {
+        .tx-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            padding-bottom: 40px;
         }
 
-        .transaction-card {
-            background: #252a3b;
-            padding: 12px 16px;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-        }
-
-        .transaction-header {
+        .tx-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
+            transition: all 0.2s;
         }
 
+        .tx-card:hover {
+            border-color: var(--gold-muted);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .tx-info { display: flex; flex-direction: column; gap: 4px; }
+        
         .tx-type {
-            font-size: 13px;
-            font-weight: bold;
-            padding: 4px 12px;
-            border-radius: 6px;
-            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .tx-type.entrada {
-            background: rgba(37, 211, 99, 0.1);
-            color: var(--alert-pos);
-            text-shadow: var(--glow-pos);
-        }
+        .tx-date { font-size: 0.75rem; color: #888; }
 
-        .tx-type.saida {
-            background: rgba(251, 75, 78, 0.1);
-            color: var(--alert-neg);
-            text-shadow: var(--glow-neg);
-        }
-
-        .tx-value {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .tx-value.positive {
-            color: var(--alert-pos);
-        }
-
-        .tx-value.negative {
-            color: var(--alert-neg);
-        }
-
-        .tx-details {
-            font-size: 13px;
-            color: var(--secondary);
-            line-height: 1.5;
-        }
-
-        .tx-details .data-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 4px;
-        }
-
-        .data-relativa {
-            color: #8a8d9b;
-            font-size: 11px;
-        }
+        .tx-amount { font-size: 1.1rem; font-weight: 700; }
+        .tx-amount.entrada { color: var(--gold-main); }
+        .tx-amount.saida { color: var(--danger); }
 
         .loading, .empty {
             text-align: center;
-            padding: 40px 20px;
-            color: #8a8d9b;
-            background: #252a3b;
-            border-radius: var(--border-radius);
+            padding: 30px;
+            color: var(--gold-muted);
+            border: 1px dashed var(--gold-muted);
+            border-radius: 12px;
+            margin-top: 10px;
         }
 
-        .empty .material-symbols-outlined {
-            font-size: 48px;
-            opacity: 0.5;
-            margin-bottom: 12px;
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                width: 100%;
-            }
-            
-            #notifyBtn {
-                top: 10px;
-                right: 10px;
-                padding: 8px 16px;
-                font-size: 12px;
-            }
-        }
     </style>
 </head>
 <body>
+
     <button id="notifyBtn">
-        <span class="material-symbols-outlined">notifications</span>
+        <span class="material-symbols-outlined">notifications_active</span>
         Ativar Notificações
     </button>
 
-    <div class="container">
-        <div class="header">
-            <div class="now">
-                <span class="material-symbols-outlined">schedule</span>
-                <span id="dataAtual">--</span>
-            </div>
-            <h2>
-                <span class="material-symbols-outlined">account_balance_wallet</span>
-                Vision Dashboard
-            </h2>
+    <div class="header-container">
+        <img src="icons/vision_icon.png" alt="Vision Logo" class="logo">
+        <h1>Vision Dashboard</h1>
+        <div class="date-badge">
+            <span id="dataAtual">--/--/----</span>
         </div>
+    </div>
 
-        <div class="bal-values">
-            <div class="bal-card">
-                <div class="label">
-                    <span class="material-symbols-outlined">arrow_downward</span>
+    <div class="dashboard-container">
+        
+        <div class="stats-grid">
+            <div class="stat-card full-width">
+                <div class="stat-label">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">account_balance_wallet</span>
+                    Saldo Atual
+                </div>
+                <div class="stat-value gold-text" id="saldo">R$ 0,00</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">trending_up</span>
                     Entradas
                 </div>
-                <div class="value positive" id="totalEntradas">--</div>
+                <div class="stat-value gold-text" id="totalEntradas">R$ 0,00</div>
             </div>
-            <div class="bal-card">
-                <div class="label">
-                    <span class="material-symbols-outlined">arrow_upward</span>
+
+            <div class="stat-card">
+                <div class="stat-label">
+                    <span class="material-symbols-outlined" style="font-size: 16px;">trending_down</span>
                     Saídas
                 </div>
-                <div class="value negative" id="totalSaidas">--</div>
-            </div>
-            <div class="bal-card">
-                <div class="label">
-                    <span class="material-symbols-outlined">account_balance</span>
-                    Saldo
-                </div>
-                <div class="value" id="saldo">--</div>
-            </div>
-            <div class="bal-card">
-                <div class="label">
-                    <span class="material-symbols-outlined">history</span>
-                    Transações
-                </div>
-                <div class="value" id="totalTransacoes">--</div>
+                <div class="stat-value red-text" id="totalSaidas">R$ 0,00</div>
             </div>
         </div>
 
-        <div class="transactions-title">
-            <span class="material-symbols-outlined">receipt_long</span>
-            Histórico de Transações
-        </div>
-        <div class="subtext">últimas movimentações</div>
-
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
             <button class="filter-btn" data-filter="entrada">Entradas</button>
             <button class="filter-btn" data-filter="saida">Saídas</button>
         </div>
 
-        <div class="transaction-list" id="transactionsList">
-            <div class="loading">Carregando...</div>
+        <div class="transactions-header">
+            <h3>Histórico</h3>
+            <p>Suas últimas movimentações</p>
+        </div>
+
+        <div id="transactionsList" class="tx-list">
+            <div class="loading">Carregando dados...</div>
         </div>
     </div>
 
     <script>
-        const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev";
+        // Configurações e Variáveis Globais
+        const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev"; 
         const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
         let currentFilter = 'all';
 
+        // --- Funções de Ajuda ---
         function urlBase64ToUint8Array(base64String) {
             const padding = "=".repeat((4 - base64String.length % 4) % 4);
             const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
@@ -386,31 +334,43 @@
             return output;
         }
 
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+        }
+
+        function tempoRelativo(dataISO) {
+            const dataTransacao = new Date(dataISO);
+            const agora = new Date();
+            const diffMs = agora - dataTransacao;
+            const diffSec = Math.floor(diffMs / 1000);
+            
+            if (diffSec < 60) return "agora mesmo";
+            if (diffSec < 3600) return `há ${Math.floor(diffSec / 60)} min`;
+            if (diffSec < 86400) return `há ${Math.floor(diffSec / 3600)} h`;
+            return dataTransacao.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'});
+        }
+
+        // --- Push Notifications Logic ---
         async function checkIfSubscribed() {
             try {
                 if (!('serviceWorker' in navigator)) return false;
                 const registration = await navigator.serviceWorker.ready;
                 const subscription = await registration.pushManager.getSubscription();
                 return subscription !== null;
-            } catch (error) {
-                console.error('❌ Erro ao verificar subscription:', error);
-                return false;
-            }
+            } catch (e) { return false; }
         }
 
         async function enablePush() {
             const btn = document.getElementById('notifyBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined">sync</span> Ativando...';
+            btn.innerHTML = 'Ativando...';
             
             try {
                 const reg = await navigator.serviceWorker.register("sw.js");
                 const perm = await Notification.requestPermission();
                 
                 if (perm !== "granted") {
-                    alert("Permissão negada para notificações!");
-                    btn.disabled = false;
-                    btn.innerHTML = '<span class="material-symbols-outlined">notifications</span> Ativar Notificações';
+                    alert("Precisamos da sua permissão para notificar!");
+                    btn.innerHTML = 'Ativar Notificações';
                     return;
                 }
 
@@ -419,156 +379,114 @@
                     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
                 });
 
-                const res = await fetch(`${SERVER}/subscriptions`, {
+                await fetch(`${SERVER}/subscriptions`, {
                     method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        "ngrok-skip-browser-warning": "true"
-                    },
+                    headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" },
                     body: JSON.stringify(sub)
                 });
 
-                if (res.ok) {
-                    alert("🎉 Notificações ativadas com sucesso!");
-                    btn.classList.remove('show');
-                } else {
-                    alert("❌ Erro ao registrar notificações.");
-                    btn.disabled = false;
-                    btn.innerHTML = '<span class="material-symbols-outlined">notifications</span> Ativar Notificações';
-                }
+                alert("🎉 Notificações Gold ativadas!");
+                btn.style.display = 'none';
+
             } catch (error) {
-                console.error("❌ Erro:", error);
-                alert("❌ Erro: " + error.message);
-                btn.disabled = false;
-                btn.innerHTML = '<span class="material-symbols-outlined">notifications</span> Ativar Notificações';
+                console.error(error);
+                alert("Erro ao ativar.");
+                btn.innerHTML = 'Tentar Novamente';
             }
         }
 
-        function tempoRelativo(dataISO) {
-            const dataTransacao = new Date(dataISO);
-            const agora = new Date();
-            const segundos = Math.floor((agora - dataTransacao) / 1000);
-            
-            if (segundos < 60) return `há ${segundos}s`;
-            const minutos = Math.floor(segundos / 60);
-            if (minutos < 60) return `há ${minutos}min`;
-            const horas = Math.floor(minutos / 60);
-            if (horas < 24) return `há ${horas}h`;
-            const dias = Math.floor(horas / 24);
-            return `há ${dias}d`;
-        }
-
+        // --- Dashboard Logic ---
         async function loadStats() {
             try {
                 const res = await fetch(`${SERVER}/transactions/stats`, {
                     headers: { "ngrok-skip-browser-warning": "true" }
                 });
-                const data = await res.json();
-                const stats = data.data || { totalEntradas: 0, totalSaidas: 0, saldo: 0 };
+                const { data } = await res.json();
                 
-                document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
-                document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
-                document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
-                
-                const saldoEl = document.getElementById('saldo');
-                saldoEl.classList.remove('positive', 'negative');
-                if (stats.saldo > 0) saldoEl.classList.add('positive');
-                else if (stats.saldo < 0) saldoEl.classList.add('negative');
-            } catch (error) {
-                console.error('❌ Erro ao carregar stats:', error);
-            }
+                if(data) {
+                    document.getElementById('totalEntradas').textContent = formatCurrency(data.totalEntradas);
+                    document.getElementById('totalSaidas').textContent = formatCurrency(data.totalSaidas);
+                    document.getElementById('saldo').textContent = formatCurrency(data.saldo);
+                }
+            } catch (e) { console.error("Erro stats", e); }
         }
 
         async function loadTransactions() {
-            const container = document.getElementById('transactionsList');
-            container.innerHTML = '<div class="loading">Carregando...</div>';
-
+            const list = document.getElementById('transactionsList');
+            const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
+            
             try {
-                const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
                 const res = await fetch(`${SERVER}/transactions${params}`, {
                     headers: { "ngrok-skip-browser-warning": "true" }
                 });
-                const data = await res.json();
-                const transactions = data.data || [];
-
-                document.getElementById('totalTransacoes').textContent = transactions.length;
+                const json = await res.json();
+                const transactions = json.data || [];
 
                 if (transactions.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty">
-                            <span class="material-symbols-outlined">inbox</span>
-                            <div>Nenhuma transação encontrada</div>
-                        </div>`;
+                    list.innerHTML = `<div class="empty">Nenhuma movimentação encontrada.</div>`;
                     return;
                 }
 
-                container.innerHTML = transactions.map(t => {
-                    const date = new Date(t.data);
-                    const dateStr = date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-                    const relativo = tempoRelativo(t.data);
-                    const icon = t.tipo === 'entrada' ? 'south' : 'north';
+                list.innerHTML = transactions.map(t => {
+                    const isEntry = t.tipo === 'entrada';
+                    const icon = isEntry ? 'arrow_upward' : 'arrow_downward';
+                    const colorClass = isEntry ? 'entrada' : 'saida';
+                    const sinal = isEntry ? '+' : '-';
                     
                     return `
-                        <div class="transaction-card" data-tipo="${t.tipo}">
-                            <div class="transaction-header">
-                                <div class="tx-type ${t.tipo}">
-                                    <span class="material-symbols-outlined">${icon}</span>
-                                    ${t.tipo === 'entrada' ? 'Entrada' : 'Saída'}
+                        <div class="tx-card">
+                            <div class="tx-info">
+                                <div class="tx-type">
+                                    <span class="material-symbols-outlined" style="font-size:18px; color: ${isEntry ? 'var(--gold-main)' : 'var(--danger)'}">
+                                        ${icon}
+                                    </span>
+                                    ${isEntry ? 'Entrada' : 'Saída'}
                                 </div>
-                                <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
-                                    ${t.tipo === 'entrada' ? '+' : '-'}${t.valor.toFixed(2)}
-                                </div>
+                                <div class="tx-date">${tempoRelativo(t.data)}</div>
                             </div>
-                            <div class="tx-details">
-                                <div class="data-row">
-                                    <span>${dateStr}</span>
-                                    <span class="data-relativa">${relativo}</span>
-                                </div>
+                            <div class="tx-amount ${colorClass}">
+                                ${sinal} ${formatCurrency(t.valor).replace('R$', '').trim()}
                             </div>
                         </div>
                     `;
                 }).join('');
-            } catch (error) {
-                console.error('❌ Erro ao carregar transações:', error);
-                container.innerHTML = '<div class="empty">Erro ao carregar transações</div>';
+
+            } catch (e) {
+                console.error(e);
+                list.innerHTML = `<div class="empty">Erro de conexão</div>`;
             }
         }
 
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                loadTransactions();
-            });
-        });
-
-        document.getElementById('notifyBtn').addEventListener('click', enablePush);
-
-        // Atualiza data/hora
-        function updateDateTime() {
+        // --- Inicialização ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Data
             const now = new Date();
-            document.getElementById('dataAtual').textContent = now.toLocaleString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
+            document.getElementById('dataAtual').textContent = now.toLocaleDateString('pt-BR', {
+                weekday: 'short', day: 'numeric', month: 'long'
             });
-        }
 
-        // Inicialização
-        (async () => {
-            const isSubscribed = await checkIfSubscribed();
-            if (!isSubscribed) document.getElementById('notifyBtn').classList.add('show');
+            // Listeners
+            document.getElementById('notifyBtn').addEventListener('click', enablePush);
             
-            updateDateTime();
-            setInterval(updateDateTime, 60000);
-            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.filter;
+                    loadTransactions();
+                });
+            });
+
+            // Check Subscription
+            const isSub = await checkIfSubscribed();
+            if(!isSub) document.getElementById('notifyBtn').classList.add('show');
+
+            // Loads
             loadStats();
             loadTransactions();
-            setInterval(() => { loadStats(); loadTransactions(); }, 30000);
-        })();
+            
+            // Auto-refresh a cada 30s
+        });
     </script>
 </body>
 </html>
