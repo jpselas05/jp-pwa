@@ -505,33 +505,16 @@
         // Botão de notificação
         document.getElementById('notifyBtn').addEventListener('click', togglePush);
 
-        // INICIALIZAÇÃO (compatível com iOS)
-        let initialized = false;
+        // Init
+        (async () => {
+            const isSubscribed = await checkIfSubscribed();
+            if (!isSubscribed) document.getElementById('notifyBtn').classList.add('show');
 
-        async function initApp() {
-            if (initialized) return;
-            initialized = true;
-
-            console.log('🚀 Inicializando Vision Dashboard...');
-
-            await updateNotifyButtonUI();
             updateDateTime();
-            setInterval(updateDateTime, 1000);
-            await loadTransactions();
+            setInterval(updateDateTime, 1000); // Atualiza relógio a cada segundo
 
-            console.log('✅ Dashboard carregado!');
-        }
-
-        // Tenta inicializar de múltiplas formas (iOS Safari pode ter problemas com DOMContentLoaded)
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initApp);
-        } else {
-            // DOM já está pronto
-            initApp();
-        }
-
-        // Backup para iOS: garante inicialização após load completo
-        window.addEventListener('load', initApp);
+            loadTransactions();
+        })();
     </script>
 </body>
 
