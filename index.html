@@ -514,9 +514,15 @@
             }
         }
 
-        onReady(() => {
-            console.log("DOM carregado no iOS também!");
+        onReady(async () => {
+            console.log("DOM carregado no iOS também!");
+
+            await updateNotifyButtonUI();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            await loadTransactions();
         });
+
     </script>
 </body>
 
