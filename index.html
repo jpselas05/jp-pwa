@@ -10,101 +10,106 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { min-height: 100vh; background: #0D0D0D; color: #FFFFFF; padding: 12px; overflow-x: hidden; }
-        .header { max-width: 1200px; margin: 0 auto 20px; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #1A1A1A; border: 1px solid #A38450; border-radius: 12px; }
-        .header-left { display: flex; align-items: center; gap: 12px; }
-        .logo { width: 36px; height: 36px; border-radius: 8px; background: #1A1A1A; }
-        .header-title { font-size: 18px; font-weight: 700; color: #C9A76A; letter-spacing: 0.5px; }
-        .header-subtitle { font-size: 11px; color: #B5B5B5; margin-top: 2px; }
-        .notification-toggle { background: transparent; border: 2px solid #A38450; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+        body { min-height: 100vh; background: #0D0D0D; color: #FFFFFF; padding: 16px; overflow-x: hidden; }
+        .header { max-width: 1200px; margin: 0 auto 24px; display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; background: #1A1A1A; border: 1px solid #A38450; border-radius: 14px; }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        .logo { width: 44px; height: 44px; border-radius: 10px; background: #C9A76A; }
+        .header-title { font-size: 22px; font-weight: 700; color: #C9A76A; letter-spacing: 0.5px; }
+        .header-subtitle { font-size: 13px; color: #B5B5B5; margin-top: 3px; }
+        .notification-toggle { background: transparent; border: 2px solid #A38450; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
         .notification-toggle:hover { background: rgba(201, 167, 106, 0.1); border-color: #C9A76A; transform: scale(1.05); }
-        .notification-toggle .material-icons { color: #C9A76A; font-size: 20px; }
+        .notification-toggle .material-icons { color: #C9A76A; font-size: 24px; }
         .notification-toggle.active { background: rgba(201, 167, 106, 0.15); border-color: #D8B887; }
         .container { max-width: 1200px; margin: 0 auto; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; }
-        .section-title { font-size: 16px; font-weight: 600; color: #C9A76A; }
-        .filters { display: flex; gap: 8px; flex-wrap: wrap; }
-        .filter-btn { padding: 6px 14px; font-size: 12px; background: rgba(201, 167, 106, 0.1); color: #C9A76A; border: 1px solid #A38450; border-radius: 20px; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 14px; }
+        .section-title { font-size: 20px; font-weight: 600; color: #C9A76A; }
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn { padding: 10px 20px; font-size: 14px; background: rgba(201, 167, 106, 0.1); color: #C9A76A; border: 1px solid #A38450; border-radius: 22px; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
         .filter-btn:hover { background: rgba(201, 167, 106, 0.2); }
         .filter-btn.active { background: linear-gradient(135deg, #C9A76A, #A38450); color: #0D0D0D; border-color: transparent; }
-        .transactions-list { display: flex; flex-direction: column; gap: 10px; }
-        .transaction-item { background: #1A1A1A; border: 1px solid #A38450; border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .transactions-list { display: flex; flex-direction: column; gap: 14px; }
+        .transaction-item { background: #1A1A1A; border: 1px solid #A38450; border-radius: 12px; padding: 18px 20px; cursor: pointer; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center; gap: 14px; }
         .transaction-item:hover { background: rgba(201, 167, 106, 0.05); border-color: #C9A76A; transform: translateX(3px); }
-        .tx-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-        .tx-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .tx-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+        .tx-icon { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .tx-icon.entrada { background: rgba(76, 175, 80, 0.15); }
         .tx-icon.saida { background: rgba(244, 67, 54, 0.15); }
-        .tx-icon .material-icons { font-size: 22px; }
+        .tx-icon .material-icons { font-size: 26px; }
         .tx-icon.entrada .material-icons { color: #4caf50; }
         .tx-icon.saida .material-icons { color: #f44336; }
-        .tx-center { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
-        .tx-value { font-size: 17px; font-weight: 700; color: #FFFFFF; }
-        .tx-meta { font-size: 11px; color: #B5B5B5; display: flex; align-items: center; gap: 6px; }
+        .tx-center { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+        .tx-value { font-size: 20px; font-weight: 700; color: #FFFFFF; }
+        .tx-meta { font-size: 13px; color: #B5B5B5; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
         .tx-meta .dot { width: 3px; height: 3px; background: #9C7A42; border-radius: 50%; }
-        .tx-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
-        .tx-type { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .tx-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+        .tx-type { font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
         .tx-type.entrada { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
         .tx-type.saida { background: rgba(244, 67, 54, 0.2); color: #f44336; }
-        .tx-time { font-size: 10px; color: #9C7A42; font-weight: 500; }
+        .tx-time { font-size: 11px; color: #9C7A42; font-weight: 500; }
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.3s ease; }
         .modal.show { display: flex; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-content { background: #1A1A1A; border: 2px solid #A38450; border-radius: 16px; width: 100%; max-width: 480px; padding: 20px; position: relative; animation: slideUp 0.4s ease; }
+        .modal-content { background: #1A1A1A; border: 2px solid #A38450; border-radius: 18px; width: 100%; max-width: 520px; padding: 28px; position: relative; animation: slideUp 0.4s ease; }
         @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .modal-close { position: absolute; top: 12px; right: 12px; background: transparent; border: none; color: #B5B5B5; cursor: pointer; font-size: 24px; line-height: 1; transition: all 0.2s; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; z-index: 10; }
+        .modal-close { position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: #B5B5B5; cursor: pointer; font-size: 28px; line-height: 1; transition: all 0.2s; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; z-index: 10; }
         .modal-close:hover { background: rgba(201, 167, 106, 0.1); color: #C9A76A; }
-        .modal-header { margin-bottom: 20px; padding-right: 32px; }
-        .modal-title { font-size: 18px; font-weight: 700; color: #C9A76A; margin-bottom: 4px; }
-        .modal-subtitle { font-size: 11px; color: #B5B5B5; }
-        .modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .detail-group { display: flex; flex-direction: column; gap: 4px; }
+        .modal-header { margin-bottom: 24px; padding-right: 36px; }
+        .modal-title { font-size: 22px; font-weight: 700; color: #C9A76A; margin-bottom: 6px; }
+        .modal-subtitle { font-size: 13px; color: #B5B5B5; }
+        .modal-body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .detail-group { display: flex; flex-direction: column; gap: 6px; }
         .detail-group.full { grid-column: 1 / -1; }
-        .detail-label { font-size: 9px; font-weight: 600; color: #9C7A42; text-transform: uppercase; letter-spacing: 0.5px; }
-        .detail-value { font-size: 11px; color: #EAEAEA; word-break: break-all; font-family: 'Courier New', monospace; padding: 6px 8px; background: rgba(201, 167, 106, 0.05); border-radius: 6px; border: 1px solid rgba(163, 132, 80, 0.3); }
-        .detail-value.large { font-size: 20px; font-weight: 700; color: #FFFFFF; font-family: 'Inter', sans-serif; text-align: center; }
-        .modal-divider { grid-column: 1 / -1; height: 1px; background: linear-gradient(90deg, transparent, #9C7A42, transparent); margin: 4px 0; }
-        .modal-footer { margin-top: 12px; display: flex; gap: 8px; }
-        .modal-btn { flex: 1; padding: 8px 14px; border: none; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .detail-label { font-size: 11px; font-weight: 600; color: #9C7A42; text-transform: uppercase; letter-spacing: 0.5px; }
+        .detail-value { font-size: 13px; color: #EAEAEA; word-break: break-all; font-family: 'Courier New', monospace; padding: 10px 12px; background: rgba(201, 167, 106, 0.05); border-radius: 8px; border: 1px solid rgba(163, 132, 80, 0.3); line-height: 1.5; }
+        .detail-value.large { font-size: 26px; font-weight: 700; color: #FFFFFF; font-family: 'Inter', sans-serif; text-align: center; padding: 14px; }
+        .modal-divider { grid-column: 1 / -1; height: 1px; background: linear-gradient(90deg, transparent, #9C7A42, transparent); margin: 6px 0; }
+        .modal-footer { margin-top: 18px; display: flex; gap: 12px; }
+        .modal-btn { flex: 1; padding: 14px 20px; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .modal-btn-primary { background: linear-gradient(135deg, #C9A76A, #A38450); color: #0D0D0D; }
         .modal-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(201, 167, 106, 0.3); }
         .modal-btn-secondary { background: transparent; border: 2px solid #A38450; color: #C9A76A; }
         .modal-btn-secondary:hover { background: rgba(201, 167, 106, 0.1); border-color: #C9A76A; }
-        .modal-btn .material-icons { font-size: 16px; }
-        .notification-container { position: fixed; top: 20px; right: -400px; width: 340px; background: #1A1A1A; border: 1px solid #A38450; border-radius: 12px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); z-index: 2000; transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
-        .notification-container.show { right: 20px; }
-        .notification-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(201, 167, 106, 0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .notification-icon .material-icons { color: #D8B887; font-size: 20px; }
-        .notification-content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-        .notification-title { font-size: 13px; font-weight: 600; color: #C9A76A; }
-        .notification-message { font-size: 12px; color: #EAEAEA; line-height: 1.4; }
-        .loading, .empty-state { text-align: center; padding: 40px 20px; color: #B5B5B5; }
-        .loading .material-icons, .empty-state .material-icons { font-size: 40px; color: #9C7A42; margin-bottom: 12px; display: block; }
+        .modal-btn .material-icons { font-size: 18px; }
+        .notification-container { position: fixed; top: 24px; right: -420px; width: 380px; background: #1A1A1A; border: 1px solid #A38450; border-radius: 14px; padding: 20px; display: flex; gap: 16px; align-items: flex-start; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); z-index: 2000; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .notification-container.show { right: 24px; animation: bounce 0.6s ease; }
+        @keyframes bounce { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-10px); } 75% { transform: translateX(5px); } }
+        .notification-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(201, 167, 106, 0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .notification-icon .material-icons { color: #D8B887; font-size: 24px; }
+        .notification-content { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .notification-title { font-size: 15px; font-weight: 600; color: #C9A76A; }
+        .notification-message { font-size: 13px; color: #EAEAEA; line-height: 1.5; }
+        .loading, .empty-state { text-align: center; padding: 50px 20px; color: #B5B5B5; font-size: 15px; }
+        .loading .material-icons, .empty-state .material-icons { font-size: 48px; color: #9C7A42; margin-bottom: 16px; display: block; }
         .loading-spinner { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @media (max-width: 768px) {
-            body { padding: 8px; }
-            .header { padding: 10px 12px; }
-            .header-title { font-size: 16px; }
-            .logo { width: 32px; height: 32px; }
-            .notification-toggle { width: 36px; height: 36px; }
-            .section-title { font-size: 14px; }
-            .modal-content { padding: 16px; }
-            .modal-body { grid-template-columns: 1fr; }
+            body { padding: 12px; }
+            .header { padding: 14px 18px; }
+            .header-title { font-size: 20px; }
+            .header-subtitle { font-size: 12px; }
+            .logo { width: 40px; height: 40px; }
+            .notification-toggle { width: 44px; height: 44px; }
+            .section-title { font-size: 18px; }
+            .filter-btn { padding: 8px 16px; font-size: 13px; }
+            .modal-content { padding: 22px; max-width: 95%; }
+            .modal-body { grid-template-columns: 1fr; gap: 12px; }
             .detail-group.full { grid-column: 1; }
-            .notification-container { width: calc(100% - 40px); right: -100%; }
-            .notification-container.show { right: 20px; }
-            .tx-left { flex-direction: column; align-items: flex-start; gap: 8px; }
-            .tx-center { width: 100%; }
+            .notification-container { width: calc(100% - 48px); right: -100%; }
+            .notification-container.show { right: 24px; }
+            .tx-left { gap: 12px; }
+            .tx-icon { width: 44px; height: 44px; }
+            .tx-value { font-size: 18px; }
+            .tx-meta { font-size: 12px; }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-left">
-            <div class="logo"><img src="icons/vision_icon.png" alt="Vision Logo" class="logo"></div>
+            <div class="logo"></div>
             <div>
                 <div class="header-title">Vision</div>
-                <div class="header-subtitle">O olho que tudo vê</div>
+                <div class="header-subtitle">Monitoramento USDT • BNB Chain</div>
             </div>
         </div>
         <button class="notification-toggle" id="notificationToggle">
