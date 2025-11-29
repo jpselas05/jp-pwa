@@ -10,44 +10,68 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
             --gold-main: #d4af37;
-            --gold-dark: #b88a2b;
-            --gold-muted: #b99d34;
-            --bg-card: rgba(20, 20, 20, 0.6);
-            --text-main: #e6edfa;
-            --danger: #ff5c5c;
-            --success: #d4af37;
-            /* Usei o dourado para representar entrada/sucesso */
-            --border-radius: 20px;
+            --gold-dark: #a88734;
+            --gold-light: #f4d56f;
+            --bg-main: #0a0a0a;
+            --bg-card: rgba(30, 30, 30, 0.5);
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --danger: #ff4757;
+            --success: #2ed573;
+            --border: rgba(212, 175, 55, 0.2);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at center, #0a0a0a 40%, #000000 100%);
-            color: var(--gold-main);
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Ícones Google */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
         .material-symbols-outlined {
             vertical-align: middle;
             font-size: 20px;
         }
 
-        /* Botão Flutuante de Notificação */
         #notifyBtn {
             position: fixed;
             top: 20px;
@@ -55,23 +79,22 @@
             background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
             color: #000;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 50px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
             transition: all 0.3s ease;
             z-index: 1000;
             display: none;
-            /* Só aparece se não tiver inscrito */
             align-items: center;
             gap: 6px;
         }
 
         #notifyBtn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
         }
 
         #notifyBtn.show {
@@ -79,216 +102,253 @@
         }
 
         .container {
-            max-width: 420px;
+            max-width: 450px;
             width: 100%;
-            /* Vidro fumê escuro */
-            background: rgba(10, 10, 10, 0.4);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: var(--border-radius);
-            padding: 30px 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 32px 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(212, 175, 55, 0.1);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Header e Logo */
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 32px;
+            position: relative;
         }
 
         img.logo {
-            width: 100px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
-            border-radius: 15px;
+            width: 80px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.4));
+            border-radius: 20px;
         }
 
         .header h2 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--gold-main);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
-            letter-spacing: 1px;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
         }
 
         .header .now {
             font-size: 12px;
-            color: var(--gold-muted);
-            margin-top: 5px;
-            opacity: 0.8;
-            font-weight: 300;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
-        /* Cards de Valores */
         .bal-values {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 32px;
         }
 
         .bal-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            padding: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 18px 16px;
             border-radius: 16px;
             text-align: center;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold-main), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bal-card:hover::before {
+            opacity: 1;
         }
 
         .bal-card:hover {
-            transform: translateY(-3px);
-            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-4px);
+            border-color: var(--gold-main);
+            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
         }
 
         .bal-card .label {
-            font-size: 11px;
-            color: #888;
+            font-size: 10px;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 4px;
+            font-weight: 500;
         }
 
         .bal-card .value {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-main);
         }
 
-        /* Cores Específicas */
         .bal-card .value.positive {
             color: var(--success);
-            text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
         }
 
         .bal-card .value.negative {
             color: var(--danger);
-            text-shadow: 0 0 5px rgba(255, 92, 92, 0.3);
         }
 
-        /* Seção Transações */
+        .transactions-section {
+            margin-top: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
         .transactions-title {
-            text-align: center;
             font-size: 14px;
             color: var(--gold-main);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
         }
 
-        .transactions-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 2px;
-            background: var(--gold-dark);
-        }
-
-        /* Filtros */
         .filter-buttons {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            background: rgba(20, 20, 20, 0.6);
+            padding: 4px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
         }
 
         .filter-btn {
             background: transparent;
-            border: 1px solid var(--gold-muted);
-            padding: 8px 18px;
-            border-radius: 30px;
-            color: var(--gold-muted);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: var(--text-muted);
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .filter-btn:hover {
             color: var(--gold-main);
-            border-color: var(--gold-main);
         }
 
         .filter-btn.active {
             background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
             color: #000;
-            border: none;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
         }
 
-        /* Lista de Transações */
         .transaction-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 400px;
+            gap: 10px;
+            max-height: 420px;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 6px;
         }
 
-        /* Scrollbar customizada */
         .transaction-list::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
+        }
+
+        .transaction-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
         }
 
         .transaction-list::-webkit-scrollbar-thumb {
             background: var(--gold-dark);
-            border-radius: 4px;
+            border-radius: 10px;
+        }
+
+        .transaction-list::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-main);
         }
 
         .transaction-card {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid transparent;
-            padding: 14px;
-            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: background 0.2s;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transaction-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .transaction-card[data-tipo="entrada"]::before {
+            background: var(--success);
+        }
+
+        .transaction-card[data-tipo="saida"]::before {
+            background: var(--danger);
         }
 
         .transaction-card:hover {
-            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--gold-main);
+            transform: translateX(4px);
         }
 
-        .transaction-card[data-tipo="entrada"] {
-            border-left-color: var(--success);
-        }
-
-        .transaction-card[data-tipo="saida"] {
-            border-left-color: var(--danger);
+        .transaction-card:hover::before {
+            width: 5px;
         }
 
         .tx-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
         }
 
         .tx-type {
             font-size: 14px;
-            color: #fff;
-            font-weight: 500;
+            color: var(--text-main);
+            font-weight: 600;
         }
 
         .tx-date {
             font-size: 11px;
-            color: #666;
+            color: var(--text-muted);
+            font-weight: 400;
         }
 
         .tx-value {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
         }
 
         .tx-value.positive {
@@ -302,23 +362,35 @@
         .loading,
         .empty {
             text-align: center;
-            padding: 30px;
-            color: var(--gold-muted);
+            padding: 40px 20px;
+            color: var(--text-muted);
             font-size: 13px;
         }
 
-        /* Ajuste Mobile */
+        .empty .material-symbols-outlined {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: block;
+            opacity: 0.5;
+        }
+
         @media (max-width: 480px) {
             .container {
-                width: 100%;
-                border: none;
-                background: transparent;
-                box-shadow: none;
+                padding: 24px 16px;
+                border-radius: 20px;
             }
 
-            body {
-                align-items: flex-start;
-                padding-top: 10px;
+            .bal-values {
+                gap: 10px;
+            }
+
+            .bal-card {
+                padding: 14px 12px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 12px;
             }
         }
     </style>
@@ -370,16 +442,19 @@
             </div>
         </div>
 
-        <div class="transactions-title">Movimentações</div>
+        <div class="transactions-section">
+            <div class="section-header">
+                <div class="transactions-title">Movimentações</div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Todas</button>
+                    <button class="filter-btn" data-filter="entrada">Entradas</button>
+                    <button class="filter-btn" data-filter="saida">Saídas</button>
+                </div>
+            </div>
 
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="entrada">Entradas</button>
-            <button class="filter-btn" data-filter="saida">Saídas</button>
-        </div>
-
-        <div class="transaction-list" id="transactionsList">
-            <div class="loading">Sincronizando...</div>
+            <div class="transaction-list" id="transactionsList">
+                <div class="loading">Sincronizando...</div>
+            </div>
         </div>
     </div>
 
@@ -387,6 +462,8 @@
         // --- CONFIGURAÇÃO ---
         const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev";
         const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
+
+        let allTransactions = [];
         let currentFilter = 'all';
 
         // --- FUNÇÕES UTILITÁRIAS ---
@@ -408,9 +485,9 @@
             const minutos = Math.floor(segundos / 60);
             if (minutos < 60) return `${minutos} min atrás`;
             const horas = Math.floor(minutos / 60);
-            if (horas < 24) return `${horas} h atrás`;
+            if (horas < 24) return `${horas}h atrás`;
             const dias = Math.floor(horas / 24);
-            return `${dias} dias atrás`;
+            return `${dias}d atrás`;
         }
 
         // --- LÓGICA DE NOTIFICAÇÃO ---
@@ -423,6 +500,14 @@
             } catch (error) {
                 console.error('Erro na verificação:', error);
                 return false;
+            }
+        }
+
+        async function updateNotifyButtonUI() {
+            const btn = document.getElementById('notifyBtn');
+            const isSubscribed = await checkIfSubscribed();
+            if (!isSubscribed) {
+                btn.classList.add('show');
             }
         }
 
@@ -466,92 +551,114 @@
             }
         }
 
-        // --- LÓGICA DO DASHBOARD ---
-        async function loadStats() {
-            try {
-                const res = await fetch(`${SERVER}/transactions/stats`, {
-                    headers: { "ngrok-skip-browser-warning": "true" }
-                });
-                const data = await res.json();
-                const stats = data.data || { totalEntradas: 0, totalSaidas: 0, saldo: 0 };
+        // --- CÁLCULO DE ESTATÍSTICAS NO FRONT ---
+        function calculateStats(transactions) {
+            const stats = {
+                totalEntradas: 0,
+                totalSaidas: 0,
+                saldo: 0
+            };
 
-                document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
-                document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
-                document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
+            transactions.forEach(t => {
+                if (t.tipo === 'entrada') {
+                    stats.totalEntradas += t.valor;
+                } else {
+                    stats.totalSaidas += t.valor;
+                }
+            });
 
-                const saldoEl = document.getElementById('saldo');
-                saldoEl.classList.remove('positive', 'negative');
-                if (stats.saldo > 0) saldoEl.classList.add('positive');
-                else if (stats.saldo < 0) saldoEl.classList.add('negative');
-            } catch (error) {
-                console.error('Erro stats:', error);
-            }
+            stats.saldo = stats.totalEntradas - stats.totalSaidas;
+            return stats;
         }
 
+        function updateStats() {
+            const stats = calculateStats(allTransactions);
+
+            document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
+            document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
+            document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
+
+            const saldoEl = document.getElementById('saldo');
+            saldoEl.classList.remove('positive', 'negative');
+            if (stats.saldo > 0) saldoEl.classList.add('positive');
+            else if (stats.saldo < 0) saldoEl.classList.add('negative');
+        }
+
+        // --- FILTRO NO FRONT ---
+        function filterAndRenderTransactions() {
+            const container = document.getElementById('transactionsList');
+
+            let filtered = allTransactions;
+            if (currentFilter !== 'all') {
+                filtered = allTransactions.filter(t => t.tipo === currentFilter);
+            }
+
+            document.getElementById('totalTransacoes').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty">
+                        <span class="material-symbols-outlined">inbox</span>
+                        Nenhuma movimentação encontrada
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(t => {
+                const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
+                const relativo = tempoRelativo(t.data);
+
+                return `
+                    <div class="transaction-card" data-tipo="${t.tipo}">
+                        <div class="tx-info">
+                            <span class="tx-type">${icon}</span>
+                            <span class="tx-date">${relativo}</span>
+                        </div>
+                        <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
+                            ${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // --- CARREGAR TODAS AS TRANSAÇÕES UMA VEZ ---
         async function loadTransactions() {
             const container = document.getElementById('transactionsList');
-            // Só mostra carregando se estiver vazio, para não piscar na atualização automática
-            if (container.children.length === 0) container.innerHTML = '<div class="loading">Buscando dados...</div>';
+
+            if (allTransactions.length === 0) {
+                container.innerHTML = '<div class="loading">Buscando dados...</div>';
+            }
 
             try {
-                const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
-                const res = await fetch(`${SERVER}/transactions${params}`, {
+                const res = await fetch(`${SERVER}/transactions`, {
                     headers: { "ngrok-skip-browser-warning": "true" }
                 });
                 const data = await res.json();
-                const transactions = data.data || [];
+                allTransactions = data.data || [];
 
-                document.getElementById('totalTransacoes').textContent = transactions.length;
-
-                if (transactions.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty">
-                            <span class="material-symbols-outlined" style="font-size: 30px; margin-bottom: 10px; display:block;">inbox</span>
-                            Nenhuma movimentação encontrada
-                        </div>`;
-                    return;
-                }
-
-                container.innerHTML = transactions.map(t => {
-                    const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
-                    const relativo = tempoRelativo(t.data);
-
-                    return `
-                        <div class="transaction-card" data-tipo="${t.tipo}">
-                            <div class="tx-info">
-                                <span class="tx-type">${icon}</span>
-                                <span class="tx-date">${relativo}</span>
-                            </div>
-                            <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
-                                ${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
+                updateStats();
+                filterAndRenderTransactions();
             } catch (error) {
                 container.innerHTML = '<div class="empty">Erro de conexão</div>';
+                console.error('Erro ao carregar:', error);
             }
         }
 
         // --- EVENTOS E INICIALIZAÇÃO ---
-
-        // Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
-                loadTransactions();
+                filterAndRenderTransactions();
             });
         });
 
-        // Notificação
         document.getElementById('notifyBtn').addEventListener('click', enablePush);
 
-        // Data/Hora
         function updateDateTime() {
             const now = new Date();
-            // Formato mais elegante
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
             const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
             const dateStr = now.toLocaleDateString('pt-BR', options);
@@ -560,12 +667,16 @@
         }
 
         // Init
-        alert("passou por aqui")
+        (async function () {
+            console.log('🚀 Inicializando Vision Dashboard...');
 
-        updateDateTime();
-        setInterval(updateDateTime, 1000); // Atualiza relógio a cada segundo
+            await updateNotifyButtonUI();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            await loadTransactions();
 
-        loadTransactions();
+            console.log('✅ Dashboard carregado!');
+        })();
     </script>
 </body>
 
