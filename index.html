@@ -28,52 +28,52 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .logo {
-            width: 120px;
-            margin-bottom: 15px;
+            width: 80px;
+            margin-bottom: 10px;
             filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             letter-spacing: 1px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
         }
 
         .subtitle {
             color: #b99d34;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
         }
 
         .notification-panel {
             background: rgba(212, 175, 55, 0.05);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
             text-align: center;
         }
 
         .notification-status {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
@@ -91,14 +91,14 @@
             background: linear-gradient(135deg, #d4af37, #b88a2b);
             color: #000;
             border: none;
-            padding: 12px 28px;
+            padding: 8px 20px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
-            margin: 5px;
+            margin: 3px;
         }
 
         button:hover {
@@ -114,35 +114,35 @@
         .transactions-section {
             background: rgba(212, 175, 55, 0.05);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 12px;
+            padding: 15px;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
         .section-title {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
         .stats {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
         }
 
         .stat-item {
             background: rgba(212, 175, 55, 0.1);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
         }
 
         .stat-value {
@@ -152,14 +152,14 @@
 
         .filters {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 8px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
         }
 
         .filter-btn {
-            padding: 8px 20px;
-            font-size: 0.9rem;
+            padding: 6px 16px;
+            font-size: 0.8rem;
             background: rgba(212, 175, 55, 0.1);
             color: #d4af37;
             border: 1px solid rgba(212, 175, 55, 0.3);
@@ -172,13 +172,13 @@
         }
 
         #transactionsList {
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
-            padding-right: 10px;
+            padding-right: 5px;
         }
 
         #transactionsList::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         #transactionsList::-webkit-scrollbar-track {
@@ -194,9 +194,9 @@
         .transaction-card {
             background: rgba(212, 175, 55, 0.08);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 12px;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -205,35 +205,35 @@
 
         .transaction-card:hover {
             background: rgba(212, 175, 55, 0.12);
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
 
         .transaction-card[data-tipo="entrada"] {
-            border-left: 3px solid #4caf50;
+            border-left: 2px solid #4caf50;
         }
 
         .transaction-card[data-tipo="saida"] {
-            border-left: 3px solid #f44336;
+            border-left: 2px solid #f44336;
         }
 
         .tx-info {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 3px;
         }
 
         .tx-type {
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .tx-date {
             color: #b99d34;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
         }
 
         .tx-value {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 600;
         }
 
@@ -248,9 +248,9 @@
         .loading,
         .empty {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             color: #b99d34;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .material-symbols-outlined {
@@ -327,6 +327,7 @@
 
         let currentFilter = 'all';
         let updateInterval;
+        let allTransactions = []; // Armazena todas as transações
 
         function urlBase64ToUint8Array(base64String) {
             const padding = "=".repeat((4 - base64String.length % 4) % 4);
@@ -353,50 +354,60 @@
         async function loadTransactions() {
             const container = document.getElementById('transactionsList');
 
-            if (container.children.length === 0) {
+            if (allTransactions.length === 0) {
                 container.innerHTML = '<div class="loading">Buscando dados...</div>';
             }
 
             try {
-                const params = currentFilter === 'all' ? '' : `?tipo=${currentFilter}`;
-                const res = await fetch(`${SERVER}/transactions${params}`, {
+                const res = await fetch(`${SERVER}/transactions`, {
                     headers: { "ngrok-skip-browser-warning": "true" }
                 });
 
                 const data = await res.json();
-                const transactions = data.data || [];
+                allTransactions = data.data || [];
 
-                document.getElementById('totalTransacoes').textContent = transactions.length;
-
-                if (transactions.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty">
-                            <span class="material-symbols-outlined" style="font-size: 40px; margin-bottom: 10px; display:block;">inbox</span>
-                            Nenhuma movimentação encontrada
-                        </div>`;
-                    return;
-                }
-
-                container.innerHTML = transactions.map(t => {
-                    const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
-                    const relativo = tempoRelativo(t.data);
-                    return `
-                        <div class="transaction-card" data-tipo="${t.tipo}">
-                            <div class="tx-info">
-                                <span class="tx-type">${icon}</span>
-                                <span class="tx-date">${relativo}</span>
-                            </div>
-                            <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
-                                ${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}
-                            </div>
-                        </div>
-                    `;
-                }).join('');
+                renderTransactions();
 
             } catch (error) {
                 console.error('Erro ao carregar transações:', error);
                 container.innerHTML = '<div class="empty">Erro ao carregar transações</div>';
             }
+        }
+
+        function renderTransactions() {
+            const container = document.getElementById('transactionsList');
+
+            // Filtra no frontend
+            const filtered = currentFilter === 'all'
+                ? allTransactions
+                : allTransactions.filter(t => t.tipo === currentFilter);
+
+            document.getElementById('totalTransacoes').textContent = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty">
+                        <span class="material-symbols-outlined" style="font-size: 35px; margin-bottom: 8px; display:block;">inbox</span>
+                        Nenhuma movimentação encontrada
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(t => {
+                const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
+                const relativo = tempoRelativo(t.data);
+                return `
+                    <div class="transaction-card" data-tipo="${t.tipo}">
+                        <div class="tx-info">
+                            <span class="tx-type">${icon}</span>
+                            <span class="tx-date">${relativo}</span>
+                        </div>
+                        <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
+                            ${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         async function checkNotificationStatus() {
@@ -525,7 +536,7 @@
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
-                loadTransactions();
+                renderTransactions(); // Filtra no frontend, sem chamar o backend
             });
         });
 
