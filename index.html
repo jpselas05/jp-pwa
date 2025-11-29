@@ -10,171 +10,179 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at center, #0a0a0a 40%, #000000 100%);
-            color: #d4af37;
+            background: #0D0D0D;
+            color: #EAEAEA;
             padding: 20px;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 700px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #1A1A1A;
+            border-radius: 16px;
+            border: 1px solid #2A2A2A;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
         .logo {
-            width: 80px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
-            border-radius: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            filter: drop-shadow(0 0 10px rgba(201, 167, 106, 0.3));
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
         }
 
         h1 {
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: -0.5px;
         }
 
         .subtitle {
-            color: #b99d34;
+            color: #B5B5B5;
             font-size: 0.85rem;
-            margin-bottom: 15px;
+            font-weight: 400;
         }
 
-        .notification-panel {
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+        .notification-toggle {
+            width: 48px;
+            height: 48px;
+            background: #1A1A1A;
+            border: 2px solid #2A2A2A;
             border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .notification-status {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .status-active {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-        }
-
-        .status-inactive {
-            background: rgba(255, 152, 0, 0.2);
-            color: #ff9800;
-        }
-
-        button {
-            background: linear-gradient(135deg, #d4af37, #b88a2b);
-            color: #000;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
+            justify-content: center;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
-            margin: 3px;
         }
 
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        .notification-toggle:hover {
+            background: #252525;
+            border-color: #C9A76A;
         }
 
-        button.secondary {
-            background: linear-gradient(135deg, #666, #444);
-            color: #fff;
+        .notification-toggle.active {
+            background: linear-gradient(135deg, #C9A76A, #A38450);
+            border-color: #C9A76A;
+        }
+
+        .notification-toggle .material-symbols-outlined {
+            font-size: 24px;
+            color: #EAEAEA;
+        }
+
+        .notification-toggle.active .material-symbols-outlined {
+            color: #0D0D0D;
         }
 
         .transactions-section {
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 12px;
-            padding: 15px;
+            background: #1A1A1A;
+            border: 1px solid #2A2A2A;
+            border-radius: 16px;
+            padding: 25px;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2A2A2A;
         }
 
         .section-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 600;
+            color: #FFFFFF;
         }
 
         .stats {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             align-items: center;
         }
 
         .stat-item {
-            background: rgba(212, 175, 55, 0.1);
-            padding: 5px 12px;
+            background: #252525;
+            padding: 8px 16px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            color: #B5B5B5;
+            border: 1px solid #2A2A2A;
         }
 
         .stat-value {
             font-weight: 600;
-            color: #d4af37;
+            color: #C9A76A;
+            margin-left: 5px;
         }
 
         .filters {
             display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .filter-btn {
-            padding: 6px 16px;
-            font-size: 0.8rem;
-            background: rgba(212, 175, 55, 0.1);
-            color: #d4af37;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            background: #252525;
+            color: #EAEAEA;
+            border: 1px solid #2A2A2A;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover {
+            background: #2A2A2A;
+            border-color: #C9A76A;
         }
 
         .filter-btn.active {
-            background: linear-gradient(135deg, #d4af37, #b88a2b);
-            color: #000;
+            background: linear-gradient(135deg, #C9A76A, #A38450);
+            color: #0D0D0D;
             border: none;
+            font-weight: 600;
         }
 
         #transactionsList {
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 10px;
         }
 
         #transactionsList::-webkit-scrollbar {
@@ -182,99 +190,316 @@
         }
 
         #transactionsList::-webkit-scrollbar-track {
-            background: rgba(212, 175, 55, 0.05);
+            background: #252525;
             border-radius: 10px;
         }
 
         #transactionsList::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.3);
+            background: #C9A76A;
             border-radius: 10px;
         }
 
         .transaction-card {
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 8px;
+            background: #252525;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .transaction-card:hover {
-            background: rgba(212, 175, 55, 0.12);
-            transform: translateX(3px);
+            background: #2A2A2A;
+            border-color: #C9A76A;
+            transform: translateX(5px);
         }
 
         .transaction-card[data-tipo="entrada"] {
-            border-left: 2px solid #4caf50;
+            border-left: 3px solid #4CAF50;
         }
 
         .transaction-card[data-tipo="saida"] {
-            border-left: 2px solid #f44336;
+            border-left: 3px solid #F44336;
         }
 
-        .tx-info {
+        .tx-left {
             display: flex;
-            flex-direction: column;
-            gap: 3px;
+            align-items: center;
+            gap: 15px;
         }
 
-        .tx-type {
-            font-weight: 600;
+        .tx-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
             font-size: 0.9rem;
         }
 
+        .tx-icon.entrada {
+            background: rgba(76, 175, 80, 0.15);
+            color: #4CAF50;
+        }
+
+        .tx-icon.saida {
+            background: rgba(244, 67, 54, 0.15);
+            color: #F44336;
+        }
+
+        .tx-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tx-address {
+            font-size: 0.9rem;
+            color: #EAEAEA;
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
+        }
+
         .tx-date {
-            color: #b99d34;
-            font-size: 0.75rem;
+            color: #B5B5B5;
+            font-size: 0.8rem;
         }
 
         .tx-value {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
         }
 
         .tx-value.positive {
-            color: #4caf50;
+            color: #4CAF50;
         }
 
         .tx-value.negative {
-            color: #f44336;
+            color: #F44336;
         }
 
         .loading,
         .empty {
             text-align: center;
-            padding: 30px;
-            color: #b99d34;
-            font-size: 0.9rem;
+            padding: 60px 20px;
+            color: #B5B5B5;
+            font-size: 0.95rem;
         }
 
         .material-symbols-outlined {
             vertical-align: middle;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8rem;
-            }
+        /* Modal de Notificação Push */
+        .notification-modal {
+            position: fixed;
+            top: 20px;
+            right: -400px;
+            width: 360px;
+            background: #1A1A1A;
+            border: 1px solid #C9A76A;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transition: right 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 1000;
+        }
 
-            .logo {
-                width: 100px;
+        .notification-modal.show {
+            right: 20px;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #C9A76A, #A38450);
+        }
+
+        .notification-icon .material-symbols-outlined {
+            color: #0D0D0D;
+            font-size: 24px;
+        }
+
+        .notification-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+
+        .notification-body {
+            color: #EAEAEA;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .notification-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #C9A76A;
+            margin-top: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Modal de Detalhes da Transação */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1A1A1A;
+            border: 1px solid #2A2A2A;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #252525;
+            border: none;
+            color: #EAEAEA;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #F44336;
+            color: #FFFFFF;
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #2A2A2A;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 5px;
+        }
+
+        .modal-subtitle {
+            color: #B5B5B5;
+            font-size: 0.85rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #252525;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #B5B5B5;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #EAEAEA;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+        }
+
+        .etherscan-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: #C9A76A;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            padding: 10px 16px;
+            background: #252525;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .etherscan-link:hover {
+            background: #2A2A2A;
+            transform: translateX(3px);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
             }
 
             .section-header {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 10px;
             }
 
             .transaction-card {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 12px;
+            }
+
+            .notification-modal {
+                width: calc(100% - 40px);
+                right: -100%;
+            }
+
+            .notification-modal.show {
+                right: 20px;
             }
         }
     </style>
@@ -283,40 +508,66 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="icons/vision_icon.png" alt="Vision Logo" class="logo">
-            <h1>Vision</h1>
-            <p class="subtitle">Acompanhe suas movimentações em tempo real</p>
-        </div>
-
-        <div class="notification-panel">
-            <div id="notificationStatus" class="notification-status status-inactive">
-                <span class="material-symbols-outlined">notifications_off</span>
-                Notificações desativadas
+            <div class="header-left">
+                <img src="icons/vision_icon.png" alt="Vision Logo" class="logo">
+                <div class="brand">
+                    <h1>Vision</h1>
+                    <span class="subtitle">Crypto Transaction Monitor</span>
+                </div>
             </div>
-            <div>
-                <button id="btnAtivar">Ativar Notificações</button>
-                <button id="btnDesativar" class="secondary" style="display: none;">Desativar Notificações</button>
+            <div class="notification-toggle" id="notificationToggle">
+                <span class="material-symbols-outlined">notifications_off</span>
             </div>
         </div>
 
         <div class="transactions-section">
             <div class="section-header">
-                <h2 class="section-title">Histórico de Transações</h2>
+                <h2 class="section-title">Transaction History</h2>
                 <div class="stats">
                     <div class="stat-item">
-                        Total: <span class="stat-value" id="totalTransacoes">0</span>
+                        Total:<span class="stat-value" id="totalTransacoes">0</span>
                     </div>
                 </div>
             </div>
 
             <div class="filters">
-                <button class="filter-btn active" data-filter="all">Todas</button>
-                <button class="filter-btn" data-filter="entrada">Entradas</button>
-                <button class="filter-btn" data-filter="saida">Saídas</button>
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="entrada">Incoming</button>
+                <button class="filter-btn" data-filter="saida">Outgoing</button>
             </div>
 
             <div id="transactionsList">
-                <div class="loading">Carregando transações...</div>
+                <div class="loading">Loading transactions...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Notificação Push -->
+    <div class="notification-modal" id="pushNotification">
+        <div class="notification-header">
+            <div class="notification-icon">
+                <span class="material-symbols-outlined">payments</span>
+            </div>
+            <div class="notification-title">New Transaction</div>
+        </div>
+        <div class="notification-body" id="notificationBody">
+            Loading...
+        </div>
+        <div class="notification-value" id="notificationValue">$0.00</div>
+    </div>
+
+    <!-- Modal de Detalhes da Transação -->
+    <div class="modal-overlay" id="transactionModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeTransactionModal()">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+            <div class="modal-header">
+                <h3 class="modal-title">Transaction Details</h3>
+                <span class="modal-subtitle">Blockchain information</span>
+            </div>
+            <div id="transactionDetails">
+                <div class="loading">Loading details...</div>
             </div>
         </div>
     </div>
@@ -327,7 +578,7 @@
 
         let currentFilter = 'all';
         let updateInterval;
-        let allTransactions = []; // Armazena todas as transações
+        let allTransactions = [];
 
         function urlBase64ToUint8Array(base64String) {
             const padding = "=".repeat((4 - base64String.length % 4) % 4);
@@ -343,19 +594,32 @@
             const agora = new Date();
             const diff = Math.floor((agora - data) / 1000);
 
-            if (diff < 60) return 'Agora mesmo';
-            if (diff < 3600) return `${Math.floor(diff / 60)} min atrás`;
-            if (diff < 86400) return `${Math.floor(diff / 3600)}h atrás`;
-            if (diff < 604800) return `${Math.floor(diff / 86400)}d atrás`;
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+            if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+            if (diff < 604800) return `${Math.floor(diff / 86400)}d ago`;
 
-            return data.toLocaleDateString('pt-BR');
+            return data.toLocaleDateString('en-US');
+        }
+
+        function formatarEndereco(endereco) {
+            if (!endereco) return 'Unknown';
+            return `${endereco.slice(0, 6)}...${endereco.slice(-4)}`;
+        }
+
+        function formatarValor(valor) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            }).format(valor);
         }
 
         async function loadTransactions() {
             const container = document.getElementById('transactionsList');
 
             if (allTransactions.length === 0) {
-                container.innerHTML = '<div class="loading">Buscando dados...</div>';
+                container.innerHTML = '<div class="loading">Loading transactions...</div>';
             }
 
             try {
@@ -369,15 +633,14 @@
                 renderTransactions();
 
             } catch (error) {
-                console.error('Erro ao carregar transações:', error);
-                container.innerHTML = '<div class="empty">Erro ao carregar transações</div>';
+                console.error('Error loading transactions:', error);
+                container.innerHTML = '<div class="empty">Failed to load transactions</div>';
             }
         }
 
         function renderTransactions() {
             const container = document.getElementById('transactionsList');
 
-            // Filtra no frontend
             const filtered = currentFilter === 'all'
                 ? allTransactions
                 : allTransactions.filter(t => t.tipo === currentFilter);
@@ -387,23 +650,32 @@
             if (filtered.length === 0) {
                 container.innerHTML = `
                     <div class="empty">
-                        <span class="material-symbols-outlined" style="font-size: 35px; margin-bottom: 8px; display:block;">inbox</span>
-                        Nenhuma movimentação encontrada
+                        <span class="material-symbols-outlined" style="font-size: 48px; margin-bottom: 10px; display:block; opacity: 0.3;">inbox</span>
+                        No transactions found
                     </div>`;
                 return;
             }
 
             container.innerHTML = filtered.map(t => {
-                const icon = t.tipo === 'entrada' ? 'Entrada' : 'Saída';
+                const icon = t.tipo === 'entrada' ? '↓' : '↑';
+                const tipo = t.tipo === 'entrada' ? 'entrada' : 'saida';
                 const relativo = tempoRelativo(t.data);
+                const endereco = formatarEndereco(t.endereco);
+                const valor = formatarValor(t.valor);
+
                 return `
-                    <div class="transaction-card" data-tipo="${t.tipo}">
-                        <div class="tx-info">
-                            <span class="tx-type">${icon}</span>
-                            <span class="tx-date">${relativo}</span>
+                    <div class="transaction-card" data-tipo="${tipo}" onclick='openTransactionModal(${JSON.stringify(t)})'>
+                        <div class="tx-left">
+                            <div class="tx-icon ${tipo}">
+                                ${icon}
+                            </div>
+                            <div class="tx-details">
+                                <div class="tx-address">${endereco}</div>
+                                <div class="tx-date">${relativo}</div>
+                            </div>
                         </div>
                         <div class="tx-value ${t.tipo === 'entrada' ? 'positive' : 'negative'}">
-                            ${t.tipo === 'entrada' ? '+' : '-'} R$ ${t.valor.toFixed(2)}
+                            ${t.tipo === 'entrada' ? '+' : '-'} ${valor}
                         </div>
                     </div>
                 `;
@@ -422,37 +694,42 @@
                 const subscription = await reg.pushManager.getSubscription();
                 return subscription !== null;
             } catch (error) {
-                console.error('Erro ao verificar status:', error);
+                console.error('Error checking status:', error);
                 return false;
             }
         }
 
-        function updateNotifyButtonUI(isActive) {
-            const statusDiv = document.getElementById('notificationStatus');
-            const btnAtivar = document.getElementById('btnAtivar');
-            const btnDesativar = document.getElementById('btnDesativar');
+        function updateNotificationToggle(isActive) {
+            const toggle = document.getElementById('notificationToggle');
+            const icon = toggle.querySelector('.material-symbols-outlined');
 
             if (isActive) {
-                statusDiv.className = 'notification-status status-active';
-                statusDiv.innerHTML = '<span class="material-symbols-outlined">notifications_active</span> Notificações ativadas';
-                btnAtivar.style.display = 'none';
-                btnDesativar.style.display = 'inline-block';
+                toggle.classList.add('active');
+                icon.textContent = 'notifications_active';
             } else {
-                statusDiv.className = 'notification-status status-inactive';
-                statusDiv.innerHTML = '<span class="material-symbols-outlined">notifications_off</span> Notificações desativadas';
-                btnAtivar.style.display = 'inline-block';
-                btnDesativar.style.display = 'none';
+                toggle.classList.remove('active');
+                icon.textContent = 'notifications_off';
+            }
+        }
+
+        async function toggleNotifications() {
+            const isActive = await checkNotificationStatus();
+
+            if (isActive) {
+                await unsubscribeUser();
+            } else {
+                await enablePush();
             }
         }
 
         async function enablePush() {
             try {
                 const reg = await navigator.serviceWorker.register("sw.js");
-                console.log("✅ Service Worker registrado:", reg);
+                console.log("✅ Service Worker registered:", reg);
 
                 const perm = await Notification.requestPermission();
                 if (perm !== "granted") {
-                    alert("Permissão negada para notificações!");
+                    showPushNotification("Permission denied", "$0.00", "Please enable notifications in your browser settings.");
                     return;
                 }
 
@@ -461,7 +738,7 @@
                     applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC)
                 });
 
-                console.log("📱 Subscription criada:", sub);
+                console.log("📱 Subscription created:", sub);
 
                 const res = await fetch(`${SERVER}/subscriptions`, {
                     method: "POST",
@@ -475,15 +752,15 @@
                 const data = await res.json();
 
                 if (res.ok) {
-                    alert("🎉 Notificações ativadas com sucesso!");
-                    updateNotifyButtonUI(true);
+                    showPushNotification("Notifications Enabled", "$0.00", "You will now receive transaction alerts!");
+                    updateNotificationToggle(true);
                 } else {
-                    alert("❌ Erro ao registrar notificações no servidor.");
-                    console.error("❌ Erro:", data);
+                    showPushNotification("Error", "$0.00", "Failed to register notifications.");
+                    console.error("❌ Error:", data);
                 }
             } catch (error) {
-                console.error("❌ Erro geral:", error);
-                alert("❌ Erro ao ativar notificações: " + error.message);
+                console.error("❌ General error:", error);
+                showPushNotification("Error", "$0.00", "Failed to enable notifications: " + error.message);
             }
         }
 
@@ -491,14 +768,13 @@
             try {
                 const reg = await navigator.serviceWorker.getRegistration();
                 if (!reg) {
-                    alert("Service Worker não encontrado.");
+                    showPushNotification("Error", "$0.00", "Service Worker not found.");
                     return;
                 }
 
                 const subscription = await reg.pushManager.getSubscription();
                 if (!subscription) {
-                    alert("Nenhuma inscrição encontrada.");
-                    updateNotifyButtonUI(false);
+                    updateNotificationToggle(false);
                     return;
                 }
 
@@ -512,41 +788,92 @@
                         body: JSON.stringify({ endpoint: subscription.endpoint })
                     });
                 } catch (e) {
-                    console.log("Falha ao sincronizar com backend, removendo local...");
+                    console.log("Backend sync failed, removing local anyway");
                 }
 
                 await subscription.unsubscribe();
-                alert("✅ Notificações desativadas com sucesso.");
-                updateNotifyButtonUI(false);
+                showPushNotification("Notifications Disabled", "$0.00", "You will no longer receive transaction alerts.");
+                updateNotificationToggle(false);
 
             } catch (error) {
-                console.error("Erro ao desativar:", error);
-                alert("❌ Erro ao desativar notificações.");
-                updateNotifyButtonUI(false);
+                console.error("Error disabling:", error);
+                showPushNotification("Error", "$0.00", "Failed to disable notifications.");
+                updateNotificationToggle(false);
             }
         }
 
-        // Event Listeners
-        document.getElementById('btnAtivar').addEventListener('click', enablePush);
-        document.getElementById('btnDesativar').addEventListener('click', unsubscribeUser);
+        function showPushNotification(title, value, body) {
+            const modal = document.getElementById('pushNotification');
+            document.querySelector('.notification-title').textContent = title;
+            document.getElementById('notificationValue').textContent = value;
+            document.getElementById('notificationBody').textContent = body;
 
-        // Filtros
+            modal.classList.add('show');
+
+            setTimeout(() => {
+                modal.classList.remove('show');
+            }, 4000);
+        }
+
+        function openTransactionModal(transaction) {
+            const modal = document.getElementById('transactionModal');
+            const detailsDiv = document.getElementById('transactionDetails');
+
+            const valor = formatarValor(transaction.valor);
+            const data = new Date(transaction.data).toLocaleString('en-US');
+
+            detailsDiv.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Type</span>
+                    <span class="detail-value">${transaction.tipo === 'entrada' ? 'Incoming' : 'Outgoing'}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Amount</span>
+                    <span class="detail-value" style="color: ${transaction.tipo === 'entrada' ? '#4CAF50' : '#F44336'}; font-size: 1.2rem;">${transaction.tipo === 'entrada' ? '+' : '-'} ${valor}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Address</span>
+                    <span class="detail-value">${transaction.endereco}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value">${data}</span>
+                </div>
+                <a href="https://etherscan.io/address/${transaction.endereco}" target="_blank" class="etherscan-link">
+                    View on Etherscan
+                    <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+                </a>
+            `;
+
+            modal.classList.add('show');
+        }
+
+        function closeTransactionModal() {
+            document.getElementById('transactionModal').classList.remove('show');
+        }
+
+        document.getElementById('notificationToggle').addEventListener('click', toggleNotifications);
+
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
-                renderTransactions(); // Filtra no frontend, sem chamar o backend
+                renderTransactions();
             });
         });
 
-        // Inicialização
+        document.getElementById('transactionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'transactionModal') {
+                closeTransactionModal();
+            }
+        });
+
         async function init() {
             const isActive = await checkNotificationStatus();
-            updateNotifyButtonUI(isActive);
+            updateNotificationToggle(isActive);
             loadTransactions();
 
-            // Atualiza transações a cada 30 segundos
             updateInterval = setInterval(loadTransactions, 30000);
         }
 
