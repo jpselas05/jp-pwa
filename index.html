@@ -506,16 +506,17 @@
         document.getElementById('notifyBtn').addEventListener('click', togglePush);
 
         // Init
-        (async () => {
-            console.log('🚀 Inicializando Vision Dashboard...');
+        function onReady(callback) {
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                callback();
+            } else {
+                document.addEventListener("DOMContentLoaded", callback);
+            }
+        }
 
-            await updateNotifyButtonUI();
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
-            await loadTransactions();
-
-            console.log('✅ Dashboard carregado!');
-        })();
+        onReady(() => {
+            console.log("DOM carregado no iOS também!");
+        });
     </script>
 </body>
 
