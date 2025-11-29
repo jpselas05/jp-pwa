@@ -10,61 +10,34 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
         :root {
             --gold-main: #d4af37;
-            --gold-dark: #a88734;
-            --gold-light: #f4d56f;
-            --bg-main: #0a0a0a;
-            --bg-card: rgba(30, 30, 30, 0.5);
-            --text-main: #ffffff;
-            --text-muted: #888888;
-            --danger: #ff4757;
-            --success: #2ed573;
-            --border: rgba(212, 175, 55, 0.2);
+            --gold-dark: #b88a2b;
+            --gold-muted: #b99d34;
+            --bg-card: rgba(20, 20, 20, 0.6);
+            --text-main: #e6edfa;
+            --danger: #ff5c5c;
+            --success: #d4af37;
+            --border-radius: 20px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0a0a0a 100%);
-            color: var(--text-main);
+            background: radial-gradient(circle at center, #0a0a0a 40%, #000000 100%);
+            color: var(--gold-main);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-
-            100% {
-                transform: translate(50px, 50px);
-            }
         }
 
         .material-symbols-outlined {
@@ -79,12 +52,12 @@
             background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
             color: #000;
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 50px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 10px rgba(212, 175, 55, 0.3);
             transition: all 0.3s ease;
             z-index: 1000;
             display: none;
@@ -93,8 +66,8 @@
         }
 
         #notifyBtn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
 
         #notifyBtn.show {
@@ -102,253 +75,208 @@
         }
 
         .container {
-            max-width: 450px;
+            max-width: 420px;
             width: 100%;
-            background: rgba(15, 15, 15, 0.8);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 32px 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(212, 175, 55, 0.1);
-            position: relative;
-            z-index: 1;
+            background: rgba(10, 10, 10, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 32px;
-            position: relative;
+            margin-bottom: 25px;
         }
 
         img.logo {
-            width: 80px;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 4px 12px rgba(212, 175, 55, 0.4));
-            border-radius: 20px;
+            width: 100px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+            border-radius: 15px;
         }
 
         .header h2 {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--gold-light), var(--gold-main));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 3px;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gold-main);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            letter-spacing: 1px;
         }
 
         .header .now {
             font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 400;
+            color: var(--gold-muted);
+            margin-top: 5px;
+            opacity: 0.8;
+            font-weight: 300;
         }
 
         .bal-values {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 32px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
         .bal-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 18px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 16px;
             border-radius: 16px;
             text-align: center;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bal-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold-main), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .bal-card:hover::before {
-            opacity: 1;
+            transition: transform 0.2s;
         }
 
         .bal-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--gold-main);
-            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.4);
         }
 
         .bal-card .label {
-            font-size: 10px;
-            color: var(--text-muted);
+            font-size: 11px;
+            color: #888;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 10px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            font-weight: 500;
         }
 
         .bal-card .value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-main);
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
         }
 
         .bal-card .value.positive {
             color: var(--success);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
         }
 
         .bal-card .value.negative {
             color: var(--danger);
-        }
-
-        .transactions-section {
-            margin-top: 24px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 92, 92, 0.3);
         }
 
         .transactions-title {
+            text-align: center;
             font-size: 14px;
             color: var(--gold-main);
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .transactions-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--gold-dark);
         }
 
         .filter-buttons {
             display: flex;
-            gap: 8px;
-            background: rgba(20, 20, 20, 0.6);
-            padding: 4px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .filter-btn {
             background: transparent;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 50px;
-            color: var(--text-muted);
+            border: 1px solid var(--gold-muted);
+            padding: 8px 18px;
+            border-radius: 30px;
+            color: var(--gold-muted);
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         .filter-btn:hover {
             color: var(--gold-main);
+            border-color: var(--gold-main);
         }
 
         .filter-btn.active {
             background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
             color: #000;
-            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+            border: none;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
         }
 
         .transaction-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 420px;
+            gap: 12px;
+            max-height: 400px;
             overflow-y: auto;
-            padding-right: 6px;
+            padding-right: 5px;
         }
 
         .transaction-list::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .transaction-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 10px;
+            width: 4px;
         }
 
         .transaction-list::-webkit-scrollbar-thumb {
             background: var(--gold-dark);
-            border-radius: 10px;
-        }
-
-        .transaction-list::-webkit-scrollbar-thumb:hover {
-            background: var(--gold-main);
+            border-radius: 4px;
         }
 
         .transaction-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid transparent;
+            padding: 14px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .transaction-card::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 3px;
-            height: 100%;
-            transition: width 0.3s;
-        }
-
-        .transaction-card[data-tipo="entrada"]::before {
-            background: var(--success);
-        }
-
-        .transaction-card[data-tipo="saida"]::before {
-            background: var(--danger);
+            transition: background 0.2s;
         }
 
         .transaction-card:hover {
-            border-color: var(--gold-main);
-            transform: translateX(4px);
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        .transaction-card:hover::before {
-            width: 5px;
+        .transaction-card[data-tipo="entrada"] {
+            border-left-color: var(--success);
+        }
+
+        .transaction-card[data-tipo="saida"] {
+            border-left-color: var(--danger);
         }
 
         .tx-info {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
 
         .tx-type {
             font-size: 14px;
-            color: var(--text-main);
-            font-weight: 600;
+            color: #fff;
+            font-weight: 500;
         }
 
         .tx-date {
             font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 400;
+            color: #666;
         }
 
         .tx-value {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .tx-value.positive {
@@ -362,35 +290,22 @@
         .loading,
         .empty {
             text-align: center;
-            padding: 40px 20px;
-            color: var(--text-muted);
+            padding: 30px;
+            color: var(--gold-muted);
             font-size: 13px;
-        }
-
-        .empty .material-symbols-outlined {
-            font-size: 40px;
-            margin-bottom: 12px;
-            display: block;
-            opacity: 0.5;
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 24px 16px;
-                border-radius: 20px;
+                width: 100%;
+                border: none;
+                background: transparent;
+                box-shadow: none;
             }
 
-            .bal-values {
-                gap: 10px;
-            }
-
-            .bal-card {
-                padding: 14px 12px;
-            }
-
-            .section-header {
-                flex-direction: column;
-                gap: 12px;
+            body {
+                align-items: flex-start;
+                padding-top: 10px;
             }
         }
     </style>
@@ -442,19 +357,16 @@
             </div>
         </div>
 
-        <div class="transactions-section">
-            <div class="section-header">
-                <div class="transactions-title">Movimentações</div>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">Todas</button>
-                    <button class="filter-btn" data-filter="entrada">Entradas</button>
-                    <button class="filter-btn" data-filter="saida">Saídas</button>
-                </div>
-            </div>
+        <div class="transactions-title">Movimentações</div>
 
-            <div class="transaction-list" id="transactionsList">
-                <div class="loading">Sincronizando...</div>
-            </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="entrada">Entradas</button>
+            <button class="filter-btn" data-filter="saida">Saídas</button>
+        </div>
+
+        <div class="transaction-list" id="transactionsList">
+            <div class="loading">Sincronizando...</div>
         </div>
     </div>
 
@@ -462,7 +374,8 @@
         // --- CONFIGURAÇÃO ---
         const SERVER = "https://clavicular-vickey-furtively.ngrok-free.dev";
         const VAPID_PUBLIC = "BPH4cawsNXPd-sm-ycjGiZPAZot7RCuQ2UqpUA7mLtF7NtcS4lJs8lLoAQLZh5ey-xDc6ZcjXHdEXjnWRkhaE50";
-
+        
+        // Cache das transações
         let allTransactions = [];
         let currentFilter = 'all';
 
@@ -485,9 +398,9 @@
             const minutos = Math.floor(segundos / 60);
             if (minutos < 60) return `${minutos} min atrás`;
             const horas = Math.floor(minutos / 60);
-            if (horas < 24) return `${horas}h atrás`;
+            if (horas < 24) return `${horas} h atrás`;
             const dias = Math.floor(horas / 24);
-            return `${dias}d atrás`;
+            return `${dias} dias atrás`;
         }
 
         // --- LÓGICA DE NOTIFICAÇÃO ---
@@ -504,8 +417,8 @@
         }
 
         async function updateNotifyButtonUI() {
-            const btn = document.getElementById('notifyBtn');
             const isSubscribed = await checkIfSubscribed();
+            const btn = document.getElementById('notifyBtn');
             if (!isSubscribed) {
                 btn.classList.add('show');
             }
@@ -551,54 +464,59 @@
             }
         }
 
-        // --- CÁLCULO DE ESTATÍSTICAS NO FRONT ---
-        function calculateStats(transactions) {
-            const stats = {
-                totalEntradas: 0,
-                totalSaidas: 0,
-                saldo: 0
-            };
+        // --- LÓGICA DO DASHBOARD ---
+        async function loadStats() {
+            try {
+                const res = await fetch(`${SERVER}/transactions/stats`, {
+                    headers: { "ngrok-skip-browser-warning": "true" }
+                });
+                const data = await res.json();
+                const stats = data.data || { totalEntradas: 0, totalSaidas: 0, saldo: 0 };
 
-            transactions.forEach(t => {
-                if (t.tipo === 'entrada') {
-                    stats.totalEntradas += t.valor;
-                } else {
-                    stats.totalSaidas += t.valor;
-                }
-            });
+                document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
+                document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
+                document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
 
-            stats.saldo = stats.totalEntradas - stats.totalSaidas;
-            return stats;
-        }
-
-        function updateStats() {
-            const stats = calculateStats(allTransactions);
-
-            document.getElementById('totalEntradas').textContent = `+${stats.totalEntradas.toFixed(2)}`;
-            document.getElementById('totalSaidas').textContent = `-${stats.totalSaidas.toFixed(2)}`;
-            document.getElementById('saldo').textContent = stats.saldo.toFixed(2);
-
-            const saldoEl = document.getElementById('saldo');
-            saldoEl.classList.remove('positive', 'negative');
-            if (stats.saldo > 0) saldoEl.classList.add('positive');
-            else if (stats.saldo < 0) saldoEl.classList.add('negative');
-        }
-
-        // --- FILTRO NO FRONT ---
-        function filterAndRenderTransactions() {
-            const container = document.getElementById('transactionsList');
-
-            let filtered = allTransactions;
-            if (currentFilter !== 'all') {
-                filtered = allTransactions.filter(t => t.tipo === currentFilter);
+                const saldoEl = document.getElementById('saldo');
+                saldoEl.classList.remove('positive', 'negative');
+                if (stats.saldo > 0) saldoEl.classList.add('positive');
+                else if (stats.saldo < 0) saldoEl.classList.add('negative');
+            } catch (error) {
+                console.error('Erro stats:', error);
             }
+        }
 
+        // Busca todas as transações do servidor (uma única vez)
+        async function fetchAllTransactions() {
+            try {
+                const res = await fetch(`${SERVER}/transactions`, {
+                    headers: { "ngrok-skip-browser-warning": "true" }
+                });
+                const data = await res.json();
+                allTransactions = data.data || [];
+                console.log(`✅ ${allTransactions.length} transações carregadas`);
+            } catch (error) {
+                console.error('Erro ao buscar transações:', error);
+                allTransactions = [];
+            }
+        }
+
+        // Renderiza as transações baseado no filtro atual (sem requisição ao servidor)
+        function renderTransactions() {
+            const container = document.getElementById('transactionsList');
+            
+            // Filtra as transações no front-end
+            const filtered = currentFilter === 'all' 
+                ? allTransactions 
+                : allTransactions.filter(t => t.tipo === currentFilter);
+
+            // Atualiza contador
             document.getElementById('totalTransacoes').textContent = filtered.length;
 
             if (filtered.length === 0) {
                 container.innerHTML = `
                     <div class="empty">
-                        <span class="material-symbols-outlined">inbox</span>
+                        <span class="material-symbols-outlined" style="font-size: 30px; margin-bottom: 10px; display:block;">inbox</span>
                         Nenhuma movimentação encontrada
                     </div>`;
                 return;
@@ -622,41 +540,31 @@
             }).join('');
         }
 
-        // --- CARREGAR TODAS AS TRANSAÇÕES UMA VEZ ---
-        async function loadTransactions() {
-            const container = document.getElementById('transactionsList');
-
-            if (allTransactions.length === 0) {
-                container.innerHTML = '<div class="loading">Buscando dados...</div>';
-            }
-
-            try {
-                const res = await fetch(`${SERVER}/transactions`, {
-                    headers: { "ngrok-skip-browser-warning": "true" }
-                });
-                const data = await res.json();
-                allTransactions = data.data || [];
-
-                updateStats();
-                filterAndRenderTransactions();
-            } catch (error) {
-                container.innerHTML = '<div class="empty">Erro de conexão</div>';
-                console.error('Erro ao carregar:', error);
-            }
+        // Atualiza tudo (busca dados + renderiza)
+        async function refreshData() {
+            await Promise.all([
+                loadStats(),
+                fetchAllTransactions()
+            ]);
+            renderTransactions();
         }
 
         // --- EVENTOS E INICIALIZAÇÃO ---
+
+        // Filtros (agora só altera o filtro e re-renderiza, sem buscar do servidor)
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 currentFilter = btn.dataset.filter;
-                filterAndRenderTransactions();
+                renderTransactions(); // Apenas re-renderiza com os dados já carregados
             });
         });
 
+        // Notificação
         document.getElementById('notifyBtn').addEventListener('click', enablePush);
 
+        // Data/Hora
         function updateDateTime() {
             const now = new Date();
             const options = { weekday: 'long', day: 'numeric', month: 'long' };
@@ -673,7 +581,8 @@
             await updateNotifyButtonUI();
             updateDateTime();
             setInterval(updateDateTime, 1000);
-            await loadTransactions();
+            
+            await refreshData();
 
             console.log('✅ Dashboard carregado!');
         })();
