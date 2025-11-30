@@ -104,7 +104,7 @@
             .tx-icon .material-icons { font-size: 22px; }
             .tx-value { font-size: 18px; }
             .tx-address { font-size: 12px; }
-            .modal-content { padding: 28px 24px; max-width: calc(100% - 32px); }
+            .modal-content { padding: 28px 24px; max-width: calc(100% + 40px); }
             .modal-title { font-size: 22px; }
             .modal-subtitle { font-size: 12px; }
             .detail-value.large { font-size: 28px; padding: 20px; }
@@ -221,7 +221,7 @@
 
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(",", "");
+            return date.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(",", "");
         }
 
         function showPushNotification(title, message) {
