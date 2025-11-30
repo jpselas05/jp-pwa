@@ -413,11 +413,35 @@
             });
         });
 
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data.type === 'OPEN_TRANSACTION_MODAL' && event.data.hash) {
+                    openTransactionDetails(event.data.hash);
+                }
+            });
+        }
+
+        // Verifica se foi aberto via notificação (com hash na URL)
+        function checkURLForTransaction() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const txHash = urlParams.get('tx');
+            
+            if (txHash) {
+                // Aguarda um pouco para garantir que o DOM está pronto
+                setTimeout(() => {
+                    openTransactionDetails(txHash);
+                    // Limpa a URL sem recarregar a página
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }, 500);
+            }
+        }
+
         async function init() {
             const isActive = await checkNotificationStatus();
             updateNotificationUI(isActive);
             loadTransactions();
             setInterval(loadTransactions, 30000);
+            checkURLForTransaction();
         }
 
         init();
