@@ -14,8 +14,13 @@
         
         .header-card { max-width: 480px; margin: 0 auto 20px; padding: 32px 28px; background: linear-gradient(135deg, #1A1A1A 0%, #1F1F1F 100%); border-radius: 28px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
         .header-top { display: flex; justify-content: space-between; align-items: center;}
+                img.logo {
+            width: 150px;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
+            border-radius: 20px;
+        }
         .logo-section { display: flex; align-items: center; gap: 16px; }
-        .logo { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #C9A76A, #A38450); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(201, 167, 106, 0.25); }
+        .logo { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(201, 167, 106, 0.25); }
         .logo .material-icons { font-size: 32px; color: #0D0D0D; }
         .header-info h1 { font-size: 24px; font-weight: 700; color: #C9A76A; letter-spacing: 0.3px; margin-bottom: 2px; }
         .header-info p { font-size: 13px; color: #9C7A42; font-weight: 500; }
@@ -78,8 +83,26 @@
 .modal-btn-secondary:hover{background:rgba(201,167,106,0.14);}
 .material-icons{font-size:16px;}
 
-
+        .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #0D0D0D 0%, #1A1A1A 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s ease, visibility 0.5s ease; }
+        .splash-screen.hidden { opacity: 0; visibility: hidden; }
+        .splash-logo { border-radius: 30px; box-shadow: 0 8px 32px rgba(201, 167, 106, 0.4); }
+        .splash-logo .material-icons { font-size: 64px; color: #0D0D0D; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); box-shadow: 0 8px 32px rgba(201, 167, 106, 0.4); } 50% { transform: scale(1.05); box-shadow: 0 12px 48px rgba(201, 167, 106, 0.6); } }
+        .splash-title { font-size: 42px; font-weight: 700; color: #C9A76A; letter-spacing: 1px; margin-bottom: 12px; }
+        .splash-subtitle { font-size: 16px; color: #9C7A42; font-weight: 500; margin-bottom: 48px; }
+        .logo-splash {
+            width: 150px;
+            border-radius: 20px;
+        }
+        .splash-loader { display: flex;}
+        .splash-dot { width: 12px; height: 12px; border-radius: 50%; background: #C9A76A; }
+        .splash-dot:nth-child(1) { animation-delay: 0s; }
+        .splash-dot:nth-child(2) { animation-delay: 0.2s; }
+        .splash-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); opacity: 0.5; } 40% { transform: scale(1); opacity: 1; } }
         
+        
+
         .notification-container { position: fixed; top: 24px; right: -420px; width: 380px; background: #1A1A1A; border: 1px solid #A38450; border-radius: 14px; padding: 20px; display: flex; gap: 16px; align-items: flex-start; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); z-index: 2000; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
         .notification-container.show { right: 24px; animation: bounce 0.6s ease; }
         @keyframes bounce { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-10px); } 75% { transform: translateX(5px); } }
@@ -148,15 +171,27 @@
     </style>
 </head>
 <body>
+        <div class="splash-screen" id="splashScreen">
+        <div class="splash-logo">
+                <img src="icons/vision_icon.png" alt="Vision Logo" class="logo-splash">
+        </div>
+        <div class="splash-title">Vision</div>
+        <div class="splash-subtitle">Rastreando cada movimento</div>
+        <div class="splash-loader">
+            <div class="splash-dot"></div>
+            <div class="splash-dot"></div>
+            <div class="splash-dot"></div>
+        </div>
+    </div>
     <div class="header-card">
         <div class="header-top">
             <div class="logo-section">
                 <div class="logo">
-                    <span class="material-icons">visibility</span>
+                    <img src="icons/vision_icon.png" alt="Vision Logo" class="logo">
                 </div>
                 <div class="header-info">
                     <h1>Vision</h1>
-                    <p>Monitoramento USDT • BNB Chain</p>
+                    <p>Monitorando cada transação</p>
                 </div>
             </div>
             <button class="notification-toggle" id="notificationToggle">
@@ -168,9 +203,9 @@
     <div class="history-card">
         <div class="history-header">Histórico</div>
         <div class="filters">
-            <button class="filter-btn active" data-filter="all">Todas</button>
-            <button class="filter-btn" data-filter="entrada">Entradas</button>
-            <button class="filter-btn" data-filter="saida">Saídas</button>
+            <button class="filter-btn active" data-filter="all">TODAS</button>
+            <button class="filter-btn" data-filter="entrada">ENTRADAS</button>
+            <button class="filter-btn" data-filter="saida">SAÍDAS</button>
         </div>
         <div class="transactions-list" id="transactionsList">
             <div class="loading">
@@ -479,9 +514,14 @@
         async function init() {
             const isActive = await checkNotificationStatus();
             updateNotificationUI(isActive);
-            loadTransactions();
+            await loadTransactions();
             setInterval(loadTransactions, 30000);
             checkURLForTransaction();
+            
+            // Remove a tela de carregamento após tudo carregar
+            setTimeout(() => {
+                document.getElementById('splashScreen').classList.add('hidden');
+            }, 800);
         }
 
         init();
